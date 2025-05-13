@@ -1,0 +1,25 @@
+export const lineHeight = {
+  h1: 64,
+  h2: 58,
+  h3: 44,
+  h4: 34,
+  h5: 26,
+  h6: 24,
+  subtitle: {
+    subtitle1: 24,
+    subtitle2: 22,
+  },
+  body: {
+    body1: 28,
+    body2: 24,
+    body3: 20,
+    p2: 20,
+  },
+  button: 22,
+  caption: 16,
+  overline: 16,
+  linkTextBig: 24,
+  linkTextMedium: 22,
+  linkTextSmall: 16,
+  bodyLinkMedium: 20,
+};
