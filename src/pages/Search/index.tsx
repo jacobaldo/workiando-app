@@ -1,39 +1,39 @@
-import React from 'react';
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import React from "react";
 import {
-  View,
-  ScrollView,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-  RefreshControl,
-  Pressable,
   ActivityIndicator,
   Image,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon2 from 'react-native-vector-icons/Ionicons';
-import {styles} from './styles';
-import {colors} from '../../constants/colors';
-import {OptionBottomSheet} from './OptionsBottomSheet';
-import {Typography} from '../../components/Typography';
-import CardWork from '../../components/2.Molecules/CardWork';
-import useSearch from './hooks';
-import {FilterBottomSheet} from './FilterBottomSheet';
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {numberWithCommas} from '../../utils/currency/currency.utils';
+  Pressable,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import Icon2 from "react-native-vector-icons/Ionicons";
+import CardWork from "../../components/2.Molecules/CardWork";
+import { Typography } from "../../components/Typography";
+import { colors } from "../../constants/colors";
+import { numberWithCommas } from "../../utils/currency/currency.utils";
+import { FilterBottomSheet } from "./FilterBottomSheet";
+import useSearch from "./hooks";
+import { OptionBottomSheet } from "./OptionsBottomSheet";
+import { styles } from "./styles";
 
-import {FAB, Text} from 'react-native-paper';
-import {useTheme} from '../../provider/ThemeProvider';
-import LottieView from 'lottie-react-native';
-import {MyAppProps} from '../App/types';
-import {Work} from './types';
+import LottieView from "lottie-react-native";
+import { FAB, Text } from "react-native-paper";
+import { useTheme } from "../../provider/ThemeProvider";
+import { MyAppProps } from "../App/types";
+import { Work } from "./types";
 // import {spacings} from '../../constants/spacings';
 // import CaroucelCompounet from '../../components/2.Molecules/Caroucel';
 // import Logo from './../../assets/svg/aa.svg';
 
-interface Props extends DrawerScreenProps<MyAppProps, 'Search'> {}
-const Search = ({navigation}: Props) => {
-  const {theme} = useTheme();
+interface Props extends DrawerScreenProps<MyAppProps, "Search"> {}
+const Search = ({ navigation }: Props) => {
+  const { theme } = useTheme();
   const {
     setSearchText,
     searchText,
@@ -55,7 +55,7 @@ const Search = ({navigation}: Props) => {
     debouncedSearchRef,
     favorites,
     handleToggleFavorite,
-  } = useSearch({navigation});
+  } = useSearch({ navigation });
   // const debouncedHandleInput = debounce(handleInput, 2000);
 
   return (
@@ -69,7 +69,8 @@ const Search = ({navigation}: Props) => {
             />
           }
           showsVerticalScrollIndicator={false}
-          style={styles.scrollView}>
+          style={styles.scrollView}
+        >
           {/* <CaroucelCompounet /> */}
           <View>
             <View style={styles.containerSearch}>
@@ -77,7 +78,8 @@ const Search = ({navigation}: Props) => {
                 style={{
                   ...styles.inputContainer,
                   backgroundColor: theme.neutral100,
-                }}>
+                }}
+              >
                 <Icon2 name="search" size={20} color={theme.textColor} />
                 <TextInput
                   style={{
@@ -85,7 +87,7 @@ const Search = ({navigation}: Props) => {
                     color: theme.textColor,
                   }}
                   placeholderTextColor={theme.textColor}
-                  onChangeText={text => {
+                  onChangeText={(text) => {
                     setSearchText(text);
                     debouncedSearchRef.current(text);
                   }}
@@ -95,23 +97,27 @@ const Search = ({navigation}: Props) => {
               </View>
               <TouchableOpacity
                 onPress={() => setOpenBtnFilterSheet(true)}
-                style={styles.filterContainer}>
+                style={styles.filterContainer}
+              >
                 <Icon name="sliders" size={24} color={colors.white} />
               </TouchableOpacity>
             </View>
             <ScrollView
               horizontal
-              style={{flexDirection: 'row', paddingStart: 12}}>
+              style={{ flexDirection: "row", paddingStart: 12 }}
+            >
               <Pressable
                 onPress={onConfigLocation}
                 style={{
                   ...styles.filterCard,
                   backgroundColor: colors.primary.primary100,
-                }}>
+                }}
+              >
                 <Typography
-                  style={{color: colors.white}}
+                  style={{ color: colors.white }}
                   bold
-                  variant={{type: 'caption'}}>
+                  variant={{ type: "caption" }}
+                >
                   {`${initAddress?.street} - ${initAddress?.city} ${initAddress?.radio} Km`}
                 </Typography>
               </Pressable>
@@ -121,11 +127,13 @@ const Search = ({navigation}: Props) => {
                   style={{
                     ...styles.filterCard,
                     backgroundColor: colors.primary.primary100,
-                  }}>
+                  }}
+                >
                   <Typography
-                    style={{color: colors.white}}
+                    style={{ color: colors.white }}
                     bold
-                    variant={{type: 'caption'}}>
+                    variant={{ type: "caption" }}
+                  >
                     {`mayor a s/${numberWithCommas(filterRange)}`}
                   </Typography>
                 </Pressable>
@@ -153,13 +161,13 @@ const Search = ({navigation}: Props) => {
               (data?.docs.length === 0 || data?.docs === undefined) && (
                 <View style={styles.empty}>
                   <LottieView
-                    source={require('../../assets/lottie/anuncia.json')}
+                    source={require("../../assets/lottie/anuncia.json")}
                     resizeMode="cover"
                     autoPlay
                     loop
                     style={styles.lottie}
                   />
-                  <Text theme={theme} style={{textAlign: 'center'}}>
+                  <Text theme={theme} style={{ textAlign: "center" }}>
                     Por ahora no tenemos trabajos en tu localidad, se el primero
                     en publicar una oferta laboral.
                   </Text>
@@ -169,9 +177,10 @@ const Search = ({navigation}: Props) => {
               <View
                 style={{
                   flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <ActivityIndicator size={20} />
               </View>
             ) : (
@@ -182,14 +191,15 @@ const Search = ({navigation}: Props) => {
                       <View style={styles.titleFija}>
                         <View
                           style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
+                            flexDirection: "row",
+                            alignItems: "center",
                             gap: 8,
-                          }}>
+                          }}
+                        >
                           {item?.photo && (
                             <Image
-                              style={{width: 30, height: 30, borderRadius: 8}}
-                              source={{uri: item?.photo}}
+                              style={{ width: 30, height: 30, borderRadius: 8 }}
+                              source={{ uri: item?.photo }}
                             />
                           )}
                           <Text theme={theme} variant="titleMedium">
@@ -199,15 +209,17 @@ const Search = ({navigation}: Props) => {
 
                         <TouchableOpacity
                           onPress={() => {
-                            navigation.navigate('JobsCategory', {
+                            navigation.navigate("JobsCategory", {
                               idCategory: item._id,
                               nameCategory: item.name,
                               navigation,
                             });
-                          }}>
+                          }}
+                        >
                           <Text
-                            style={{color: theme.colors.primary}}
-                            variant="titleSmall">
+                            style={{ color: theme.colors.primary }}
+                            variant="titleSmall"
+                          >
                             Ver Todo
                           </Text>
                         </TouchableOpacity>
@@ -216,10 +228,11 @@ const Search = ({navigation}: Props) => {
                       <ScrollView
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        style={styles.containerWorks}>
+                        style={styles.containerWorks}
+                      >
                         {item.works.map((item1, index1) => {
                           const isFavorite = favorites.some(
-                            (fav: Work) => fav._id === item1._id,
+                            (fav: Work) => fav._id === item1._id
                           );
                           return (
                             <View key={index1} style={styles.cardWork}>
@@ -248,12 +261,12 @@ const Search = ({navigation}: Props) => {
           disabled={false}
           loading={false}
           onPress={() => {
-            ToastController.showModal(
-              'Aceptar exitoso!!!!',
-              {type: 'success'},
-              'top',
-              true,
-            );
+            showMessage({
+        message: "Error!!",
+        description: "Error cargando favoritos",
+        type: "danger",
+        icon: "danger",
+      });
           }}
           iconLeft={
             <Icon
@@ -294,8 +307,8 @@ const Search = ({navigation}: Props) => {
         />
       </View>
       <FAB
-        icon={'plus'}
-        onPress={() => navigation.navigate('ConfigureEmploye')}
+        icon={"plus"}
+        onPress={() => navigation.navigate("ConfigureEmploye")}
         style={styles.fabStyle}
         size="small"
       />

@@ -1,7 +1,6 @@
-import {useEffect, useState} from 'react';
-import useAxiosGet from '../../../services/apiGet';
-import {Category} from '../../ConfigureEmploye/types';
-import {useDispatch, useSelector} from 'react-redux';
+import { useEffect, useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addFilterCategory,
   addFilterRange,
@@ -9,8 +8,9 @@ import {
   removeFilterCategory,
   removeFilterTypeEmploye,
   resetAllFilters,
-} from '../../../redux/Filters/FilterAcction';
-import ToastController from '../../../components/2.Molecules/ToastModal/ToastController';
+} from "../../../redux/Filters/FilterAcction";
+import useAxiosGet from "../../../services/apiGet";
+import { Category } from "../../ConfigureEmploye/types";
 // import {useUser} from '../../../provider/AuthProvider';
 
 const useFilterBottomSheet = ({
@@ -19,10 +19,10 @@ const useFilterBottomSheet = ({
   setIsOpenFilter,
 }: any) => {
   const dispatch = useDispatch();
-  const {filterCategories, filterTypeEmployes, filterRange} = useSelector(
-    (state: any) => state.filterReducer,
+  const { filterCategories, filterTypeEmployes, filterRange } = useSelector(
+    (state: any) => state.filterReducer
   );
-  let {initAddress} = useSelector((store: any) => store?.data);
+  let { initAddress } = useSelector((store: any) => store?.data);
   const [sliderValue, setSliderValue] = useState(filterRange);
   const [showAllCategories, setShowAllCategories] = useState(false);
 
@@ -30,12 +30,12 @@ const useFilterBottomSheet = ({
     data: dataCategories,
     getData,
     loading,
-  } = useAxiosGet<Category[]>('/category');
+  } = useAxiosGet<Category[]>("/category");
   const {
     data: dataTypeEmploye,
     getData: getDataEmploye,
     loading: loadingEmploye,
-  } = useAxiosGet<Category[]>('/typeEmploye');
+  } = useAxiosGet<Category[]>("/typeEmploye");
 
   const handleFilterCategory = (filter: string) => {
     if (filterCategories && filterCategories.includes(filter)) {
@@ -44,12 +44,12 @@ const useFilterBottomSheet = ({
       if (filterCategories.length < 6) {
         dispatch(addFilterCategory(filter));
       } else {
-        ToastController.showModal(
-          'Maximo 6 categorias seleccionadas',
-          {type: 'danger'},
-          'top',
-          true,
-        );
+        showMessage({
+          message: "Error!!",
+          description: "Maximo 6 categorias seleccionadas",
+          type: "danger",
+          icon: "danger",
+        });
       }
     }
   };
@@ -60,7 +60,7 @@ const useFilterBottomSheet = ({
     if (
       filterTypeEmployes &&
       filterTypeEmployes.some(
-        (selectedFilter: string) => selectedFilter === filter._id,
+        (selectedFilter: string) => selectedFilter === filter._id
       )
     ) {
       dispatch(removeFilterTypeEmploye(filter._id));
@@ -74,7 +74,7 @@ const useFilterBottomSheet = ({
   };
 
   const onConfigLocation = () => {
-    navigation.navigate('LocationList');
+    navigation.navigate("LocationList");
     setIsOpenFilter(false);
   };
   useEffect(() => {
@@ -85,11 +85,11 @@ const useFilterBottomSheet = ({
 
   const hasNonCalculableAmount = (): boolean => {
     if (dataTypeEmploye) {
-      const filteredData = dataTypeEmploye.filter(obj =>
-        filterTypeEmployes.includes(obj._id),
+      const filteredData = dataTypeEmploye.filter((obj) =>
+        filterTypeEmployes.includes(obj._id)
       );
       const hasCalculableAmountTrue = filteredData.some(
-        obj => !obj.calculableAmount,
+        (obj) => !obj.calculableAmount
       );
 
       return hasCalculableAmountTrue;

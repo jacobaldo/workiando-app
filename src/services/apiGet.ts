@@ -1,9 +1,9 @@
-import {useState} from 'react';
-import {AxiosResponse} from 'axios';
-import ToastController from '../components/2.Molecules/ToastModal/ToastController';
+import { AxiosResponse } from "axios";
+import { useState } from "react";
 
-import {createAxiosInstance} from './axiosInstance';
-import {useUser} from '../provider/AuthProvider';
+import { showMessage } from "react-native-flash-message";
+import { useUser } from "../provider/AuthProvider";
+import { createAxiosInstance } from "./axiosInstance";
 
 // Definir un tipo genérico para la respuesta
 type ResponseType<T> = {
@@ -17,7 +17,7 @@ type ResponseType<T> = {
 const useAxiosGet = <T>(url: string): ResponseType<T> => {
   const {
     login,
-    authState: {token},
+    authState: { token },
   } = useUser();
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
@@ -35,12 +35,12 @@ const useAxiosGet = <T>(url: string): ResponseType<T> => {
       setData(response.data);
     } catch (e) {
       setError(e);
-      ToastController.showModal(
-        'Error de conexión',
-        {type: 'danger'},
-        'top',
-        true,
-      );
+      showMessage({
+        message: "Error!!",
+        description: "Error de conexion",
+        type: "danger",
+        icon: "danger",
+      });
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ const useAxiosGet = <T>(url: string): ResponseType<T> => {
     await getData(); // Llamar a la función getData para obtener nuevos datos
   };
 
-  return {data, loading, error, getData, refreshData};
+  return { data, loading, error, getData, refreshData };
 };
 
 export default useAxiosGet;

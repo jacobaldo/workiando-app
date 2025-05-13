@@ -1,13 +1,13 @@
-import {Linking} from 'react-native';
+import { Linking } from "react-native";
 
-import {ConfirmProps, Subs} from './types';
-import useAxiosPost from '../../../services/apiPost';
-import ToastController from '../../../components/2.Molecules/ToastModal/ToastController';
-import {useUser} from '../../../provider/AuthProvider';
-import {formatDateWithSlash} from '../../../utils/formatDate.util';
-import {numberWithCommas} from '../../../utils/currency/currency.utils';
-import {useState} from 'react';
-import {NUM_ADMIN} from '../../../services/api';
+import { useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useUser } from "../../../provider/AuthProvider";
+import { NUM_ADMIN } from "../../../services/api";
+import useAxiosPost from "../../../services/apiPost";
+import { numberWithCommas } from "../../../utils/currency/currency.utils";
+import { formatDateWithSlash } from "../../../utils/formatDate.util";
+import { ConfirmProps, Subs } from "./types";
 
 const useConfirmMembershipSheet = ({
   navigation,
@@ -15,44 +15,46 @@ const useConfirmMembershipSheet = ({
   setIsOpenFilter,
 }: ConfirmProps) => {
   const {
-    authState: {user},
+    authState: { user },
   } = useUser();
-  const {postData, loading} = useAxiosPost();
-  const [payMetod, setPayMetod] = useState('yape');
+  const { postData, loading } = useAxiosPost();
+  const [payMetod, setPayMetod] = useState("yape");
   const [termCondition, setTermCondition] = useState(false);
   const sendWhatsAppMessage = () => {
     const body = {
       user: user?._id,
       plan: membership._id,
-      date: {startDate: Date.now(), endDate: Date.now()},
-      type: 'user',
+      date: { startDate: Date.now(), endDate: Date.now() },
+      type: "user",
     };
     // sendToWhatsAppNumber('res?.data?.voucher', '51931588227');
-    postData<Subs>('plan/subscription', body)
-      .then(res => {
+    postData<Subs>("plan/subscription", body)
+      .then((res) => {
         if (res.status === 200) {
-          ToastController.showModal(
-            'Su solicitud se registró exitoso.',
-            {type: 'success'},
-            'top',
-            true,
-          );
+          showMessage({
+            message: "Felicitaciones!!",
+            description: "Su solicitud se registró exitoso.",
+            type: "success",
+            icon: "success",
+          });
+
           navigation.reset({
             index: 0,
-            routes: [{name: 'Home'}],
+            routes: [{ name: "Home" }],
           });
           sendToWhatsAppNumber(res?.data, NUM_ADMIN);
         }
       })
-      .catch(error => {
-        ToastController.showModal(
-          error.message ??
+      .catch((error) => {
+        showMessage({
+          message: "Error!!",
+          description:
+            error.message ??
             `Error de solicitud de membresia'
-          } `,
-          {type: 'danger'},
-          'top',
-          true,
-        );
+        } `,
+          type: "danger",
+          icon: "danger",
+        });
       });
     setIsOpenFilter(false);
   };
@@ -64,7 +66,7 @@ const useConfirmMembershipSheet = ({
       🔑 Código de pago : ${data.subscription.paymentCode}
       💳 **Método de pago**: Tarjeta de Crédito
       📅 **Fecha de pago**: ${formatDateWithSlash(
-        data.subscription.createdAt.toString(),
+        data.subscription.createdAt.toString()
       )}
       💵 **Monto abonado**: S/ ${numberWithCommas(data.membership.price)}
       👤 **Cliente**: ${user?.name} ${user?.lastname}
@@ -75,16 +77,16 @@ const useConfirmMembershipSheet = ({
       💡 **Gracias, espero su pronta respuesta!**
       `;
       const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(
-        voucherMessage,
+        voucherMessage
       )}`;
       Linking.openURL(url);
     } catch (error) {
-      console.error('Error al enviar mensaje a WhatsApp:', error);
+      console.error("Error al enviar mensaje a WhatsApp:", error);
     }
   };
 
   const navigateTerm = () => {
-    navigation.navigate('TermsAndConditions', {navigation});
+    navigation.navigate("TermsAndConditions", { navigation });
   };
   return {
     sendWhatsAppMessage,

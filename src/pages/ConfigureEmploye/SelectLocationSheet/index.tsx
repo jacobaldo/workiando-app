@@ -1,17 +1,17 @@
-import React, {useContext} from 'react';
-import {Modal, Pressable, SafeAreaView, View} from 'react-native';
-import {ThemeContext} from '../../../provider/ThemeProvider';
-import {HeaderBottomSheet} from '../../../components/2.Molecules/HeaderBottomSheet';
-import {Button} from '../../../components/Button';
-import MapView, {Marker} from 'react-native-maps';
-import {styles} from './style';
-import {analizingDirections} from '../../../utils/others';
-import {colors} from '../../../constants/colors';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {API_KEY} from '../../../services/api';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelectLocationSheet} from './hooks';
-import {Text} from 'react-native-paper';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons.js";
+import React, { useContext } from "react";
+import { Modal, Pressable, SafeAreaView, View } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import MapView, { Marker } from "react-native-maps";
+import { Text } from "react-native-paper";
+import { HeaderBottomSheet } from "../../../components/2.Molecules/HeaderBottomSheet";
+import { Button } from "../../../components/Button";
+import { colors } from "../../../constants/colors";
+import { ThemeContext } from "../../../provider/ThemeProvider";
+import { API_KEY } from "../../../services/api";
+import { analizingDirections } from "../../../utils/others";
+import { useSelectLocationSheet } from "./hooks";
+import { styles } from "./style";
 
 export const SelectLocationSheet = ({
   isOpen,
@@ -19,29 +19,36 @@ export const SelectLocationSheet = ({
   address,
   setAddress,
 }: any) => {
-  const {theme} = useContext(ThemeContext);
-  const {newCoords, regionAddress, setRegionAddress} = useSelectLocationSheet({
-    isOpen,
-    setIsOpen,
-    address,
-    setAddress,
-  });
+  const { theme } = useContext(ThemeContext);
+  const { newCoords, regionAddress, setRegionAddress } = useSelectLocationSheet(
+    {
+      isOpen,
+      setIsOpen,
+      address,
+      setAddress,
+    }
+  );
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={isOpen}
-      onRequestClose={() => setIsOpen(false)}>
+      onRequestClose={() => setIsOpen(false)}
+    >
       <View style={styles.container}>
         <Pressable onPress={() => setIsOpen(false)} style={styles.touchable} />
         <SafeAreaView
-          style={{...styles.body, backgroundColor: theme.backgroundbottomShet}}>
+          style={{
+            ...styles.body,
+            backgroundColor: theme.backgroundbottomShet,
+          }}
+        >
           <HeaderBottomSheet
             title="Seleciona ubicacion del anuncio"
             setIsOpen={setIsOpen}
           />
-          <View style={{alignItems: 'center', padding: 16}}>
+          <View style={{ alignItems: "center", padding: 16 }}>
             <GooglePlacesAutocomplete
               renderLeftButton={() => (
                 <Icon
@@ -50,7 +57,7 @@ export const SelectLocationSheet = ({
                   size={30}
                 />
               )}
-              placeholder={'Ingresa una dirección'}
+              placeholder={"Ingresa una dirección"}
               fetchDetails={true}
               onPress={async (data, details = null) => {
                 const jsonAdress = await analizingDirections(details);
@@ -66,13 +73,13 @@ export const SelectLocationSheet = ({
               }}
               query={{
                 key: API_KEY,
-                language: 'es',
+                language: "es",
               }}
               enablePoweredByContainer={false}
               suppressDefaultStyles={true}
               filterReverseGeocodingByTypes={[
-                'locality',
-                'administrative_area_level_3',
+                "locality",
+                "administrative_area_level_3",
               ]}
               predefinedPlacesAlwaysVisible={true}
               numberOfLines={2}
@@ -80,14 +87,14 @@ export const SelectLocationSheet = ({
                 textInputContainer: {
                   borderRadius: 20,
                   paddingHorizontal: 7.5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
+                  flexDirection: "row",
+                  alignItems: "center",
                 },
                 textInput: {
                   height: 55,
                   color: theme.textColor,
                   fontSize: 15,
-                  fontFamily: 'Poppins-SemiBold',
+                  fontFamily: "Poppins-SemiBold",
                   flex: 1,
                 },
                 container: {
@@ -95,8 +102,8 @@ export const SelectLocationSheet = ({
                   borderRadius: 20,
                   borderWidth: 1,
                   borderColor: theme.neutral300,
-                  overflow: 'hidden',
-                  width: '100%',
+                  overflow: "hidden",
+                  width: "100%",
                 },
                 predefinedPlacesDescription: {
                   color: colors.neutral.neutral300,
@@ -113,8 +120,8 @@ export const SelectLocationSheet = ({
                   height: 50,
                 },
                 description: {
-                  fontFamily: 'Poppins-Light',
-                  fontWeight: 'bold',
+                  fontFamily: "Poppins-Light",
+                  fontWeight: "bold",
                   color: theme.textColor,
                 },
               }}
@@ -149,17 +156,18 @@ export const SelectLocationSheet = ({
               </MapView>
             )}
           </View>
-          <Text style={{padding: 8}} theme={theme} variant="titleMedium">
+          <Text style={{ padding: 8 }} theme={theme} variant="titleMedium">
             {address?.street}
           </Text>
           <View
             style={{
               ...styles.containerInput,
               backgroundColor: theme.backgroundColor,
-            }}>
+            }}
+          >
             <Button
               type="primary"
-              btnText={'Confirmar Ubicacion'}
+              btnText={"Confirmar Ubicacion"}
               onPress={() => setIsOpen(false)}
             />
           </View>

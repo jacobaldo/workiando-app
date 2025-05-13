@@ -1,19 +1,19 @@
-import {useCallback, useEffect, useState} from 'react';
+import { debounce } from "lodash";
+import moment from "moment";
+import { useCallback, useEffect, useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { listItemAdmin } from "../../../../../mooks/listItemAdmin";
+import useAxiosGet from "../../../../../services/apiGet";
+import useAxiosPut from "../../../../../services/apiPut";
+import { MembershipAll } from "../../../../ConfigureEmploye/MembershipSheet/types";
+import { bodyCreate } from "../../../../ConfigureEmploye/types";
+import { Categories, Membership, Work } from "../../../../Search/types";
 import {
   AdminUserAndWorksProps,
   ListItemAdmin,
   Subscription,
   SubscriptionAll,
-} from './types';
-import {listItemAdmin} from '../../../../../mooks/listItemAdmin';
-import {debounce} from 'lodash';
-import useAxiosGet from '../../../../../services/apiGet';
-import {Categories, Membership, Work} from '../../../../Search/types';
-import useAxiosPut from '../../../../../services/apiPut';
-import ToastController from '../../../../../components/2.Molecules/ToastModal/ToastController';
-import {bodyCreate} from '../../../../ConfigureEmploye/types';
-import moment from 'moment';
-import {MembershipAll} from '../../../../ConfigureEmploye/MembershipSheet/types';
+} from "./types";
 
 export const useAcceptedWorks = ({
   navigation,
@@ -21,7 +21,7 @@ export const useAcceptedWorks = ({
 }: AdminUserAndWorksProps) => {
   const [listAdmin, setListAdmin] = useState<ListItemAdmin[]>();
   const [selectItem, setSelectItem] = useState<number>(0);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [visibleDialog, setVisibleDialog] = useState(false);
   const [visibleDialogM, setVisibleDialogM] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Work>();
@@ -33,14 +33,14 @@ export const useAcceptedWorks = ({
     data: membership,
     getData: getMembership,
     loading: loadingMembership,
-  } = useAxiosGet<MembershipAll>('/plan/membership');
+  } = useAxiosGet<MembershipAll>("/plan/membership");
   const {
     data: listData,
     getData,
     loading,
     refreshData,
   } = useAxiosGet<Categories>(
-    `/works?status=${(listAdmin && listAdmin[selectItem]?.get) ?? 'created'}`,
+    `/works?status=${(listAdmin && listAdmin[selectItem]?.get) ?? "created"}`
   );
   const {
     data: dataSubs,
@@ -49,35 +49,34 @@ export const useAcceptedWorks = ({
     refreshData: refreshSubs,
   } = useAxiosGet<SubscriptionAll>(
     `/plan/subscription?status=${
-      (listAdmin && listAdmin[selectItem]?.get) ?? 'Requested'
-    }`,
+      (listAdmin && listAdmin[selectItem]?.get) ?? "Requested"
+    }`
   );
 
   // subscription
-  const {putData, loading: loadingPut} = useAxiosPut();
+  const { putData, loading: loadingPut } = useAxiosPut();
 
   useEffect(() => {
     if (membership?.docs && membership?.docs?.length > 0) {
       setSelectedMembership(membership?.docs[0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [membership]);
   useEffect(() => {
-    const list = listItemAdmin.filter(item => item.type === type);
+    const list = listItemAdmin.filter((item) => item.type === type);
     setListAdmin(list);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchResults = async (searchQuery: string) => {
     //aqui buscar
-    console.log('sssss', searchQuery);
+    console.log("sssss", searchQuery);
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFetchResults = useCallback(
-    debounce(searchQuery => {
+    debounce((searchQuery) => {
       fetchResults(searchQuery);
     }, 500),
-    [],
+    []
   );
   const onSearch = (text: string) => {
     setQuery(text);
@@ -85,8 +84,8 @@ export const useAcceptedWorks = ({
   };
 
   useEffect(() => {
-    type === 'work' && getData();
-    type === 'user' && getDataSubs();
+    type === "work" && getData();
+    type === "user" && getDataSubs();
     // type === 'user' && getDataUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectItem]);
@@ -99,12 +98,12 @@ export const useAcceptedWorks = ({
     setVisibleDialogM(true);
   };
   const addDays = (days: number) => {
-    return moment(new Date()).add(days, 'days').toDate();
+    return moment(new Date()).add(days, "days").toDate();
   };
   const onPressAcept = () => {
     setVisibleDialog(false);
     const body = {
-      status: 'approved',
+      status: "approved",
       date: {
         dateCreated: Date.now(),
         dateExpired: addDays(selectedItem?.idMembership?.duration ?? 0),
@@ -114,12 +113,13 @@ export const useAcceptedWorks = ({
     if (selectedItem) {
       putData(`/works/${selectedItem._id}`, body).then(() => {
         refreshData();
-        ToastController.showModal(
-          'Anuncio Aceptado',
-          {type: 'success'},
-          'top',
-          true,
-        );
+
+        showMessage({
+          message: "Felicidades!!",
+          description: "Anuncio Aceptado",
+          type: "success",
+          icon: "success",
+        });
       });
     }
   };
@@ -129,22 +129,23 @@ export const useAcceptedWorks = ({
 
     if (selectedItemM) {
       const body = {
-        status: 'active',
+        status: "active",
         startDate: Date.now(),
         endDate: new Date(
           new Date().setDate(
-            new Date().getDate() + selectedItemM.planDetails.duration,
-          ),
+            new Date().getDate() + selectedItemM.planDetails.duration
+          )
         ),
       };
       putData(`plan/subscription/${selectedItemM._id}`, body).then(() => {
         refreshData();
-        ToastController.showModal(
-          'Membresia Aceptada',
-          {type: 'success'},
-          'top',
-          true,
-        );
+
+        showMessage({
+          message: "Felicidades!!",
+          description: "Membresia Aceptada",
+          type: "success",
+          icon: "success",
+        });
       });
     }
   };
@@ -163,7 +164,7 @@ export const useAcceptedWorks = ({
       typeEmploye: item.typeEmploye.name,
       quantity: 1,
     };
-    navigation.navigate('ConfigureEmploye', {
+    navigation.navigate("ConfigureEmploye", {
       navigation: navigation,
       data: newData,
       edit: true,
@@ -179,7 +180,7 @@ export const useAcceptedWorks = ({
   };
   const pressSelectMembership = (selected: Membership) => {
     const body = {
-      status: 'approved',
+      status: "approved",
       date: {
         dateCreated: Date.now(),
         dateExpired: addDays(selected.duration ?? 0),
@@ -190,12 +191,12 @@ export const useAcceptedWorks = ({
       putData(`/works/${selectedItem._id}`, body).then(() => {
         refreshData();
         setOpenMembershipBtnSheet(false);
-        ToastController.showModal(
-          'Membresia Renovada',
-          {type: 'success'},
-          'top',
-          true,
-        );
+        showMessage({
+          message: "Felicidades!!",
+          description: "Membresia Renovada",
+          type: "success",
+          icon: "success",
+        });
       });
     }
     // if (selectedItem) {
@@ -209,12 +210,7 @@ export const useAcceptedWorks = ({
     //   putData(`plan/subscription/${selected._id}`, body).then(() => {
     //     refreshData();
     //     setOpenMembershipBtnSheet(false);
-    //     ToastController.showModal(
-    //       'Membresia Renovada',
-    //       {type: 'success'},
-    //       'top',
-    //       true,
-    //     );
+
     //   });
     // }
   };

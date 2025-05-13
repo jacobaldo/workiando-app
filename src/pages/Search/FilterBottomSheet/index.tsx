@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
-import {Props, itemProps} from './types';
+import Icon from "@expo/vector-icons/Feather.js";
+import Slider from "@react-native-community/slider";
+import React, { useContext } from "react";
 import {
   ActivityIndicator,
   Modal,
@@ -8,34 +9,34 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
-} from 'react-native';
-import {styles} from './style';
-import {Typography} from '../../../components/Typography';
-import {ThemeContext} from '../../../provider/ThemeProvider';
-import {HeaderBottomSheet} from '../../../components/2.Molecules/HeaderBottomSheet';
-import {Button} from '../../../components/Button';
-import Slider from '@react-native-community/slider';
-import {numberWithCommas} from '../../../utils/currency/currency.utils';
-import useFilterBottomSheet from './hooks';
-import Icon from 'react-native-vector-icons/Feather';
-import {colors} from '../../../constants/colors';
-import {Text} from 'react-native-paper';
-const ItemFilter = ({item, filter, onPress}: itemProps) => {
+} from "react-native";
+import { Text } from "react-native-paper";
+import { HeaderBottomSheet } from "../../../components/2.Molecules/HeaderBottomSheet";
+import { Button } from "../../../components/Button";
+import { Typography } from "../../../components/Typography";
+import { colors } from "../../../constants/colors";
+import { ThemeContext } from "../../../provider/ThemeProvider";
+import { numberWithCommas } from "../../../utils/currency/currency.utils";
+import useFilterBottomSheet from "./hooks";
+import { styles } from "./style";
+import { Props, itemProps } from "./types";
+const ItemFilter = ({ item, filter, onPress }: itemProps) => {
   const select = filter && filter.some((data: any) => data === item._id);
 
   return (
     <Pressable
       onPress={onPress}
-      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         ...styles.filterCard,
         borderColor: colors.primary.primary100,
-        backgroundColor: select ? colors.primary.primary100 : 'transparent',
-      }}>
+        backgroundColor: select ? colors.primary.primary100 : "transparent",
+      }}
+    >
       <Typography
         bold
-        style={{color: select ? colors.white : colors.primary.primary100}}
-        variant={{type: 'caption'}}>
+        style={{ color: select ? colors.white : colors.primary.primary100 }}
+        variant={{ type: "caption" }}
+      >
         {item.name}
       </Typography>
       {select && <Icon name="x" color={colors.white} size={15} />}
@@ -67,15 +68,16 @@ export const FilterBottomSheet = ({
     setShowAllCategories,
     showAllCategories,
     removeAllFilter,
-  } = useFilterBottomSheet({navigation, onPressFilter, setIsOpenFilter});
-  const {theme} = useContext(ThemeContext);
+  } = useFilterBottomSheet({ navigation, onPressFilter, setIsOpenFilter });
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={isOpenFilter}
-      onRequestClose={() => setIsOpenFilter(false)}>
+      onRequestClose={() => setIsOpenFilter(false)}
+    >
       <View style={styles.container}>
         <Pressable
           onPress={() => setIsOpenFilter(false)}
@@ -86,10 +88,11 @@ export const FilterBottomSheet = ({
           style={{
             ...styles.body,
             backgroundColor: theme.backgroundbottomShet,
-          }}>
+          }}
+        >
           <HeaderBottomSheet title="Filtrar por" setIsOpen={setIsOpenFilter} />
           <ScrollView style={styles.filterContainer}>
-            <Typography variant={{type: 'body1'}}>Ubicación</Typography>
+            <Typography variant={{ type: "body1" }}>Ubicación</Typography>
             <View style={styles.listFilter}>
               <Pressable
                 onPress={onConfigLocation}
@@ -97,11 +100,13 @@ export const FilterBottomSheet = ({
                   ...styles.filterCard,
                   borderColor: colors.primary.primary100,
                   backgroundColor: colors.primary.primary100,
-                }}>
+                }}
+              >
                 <Typography
-                  style={{color: colors.white}}
+                  style={{ color: colors.white }}
                   bold
-                  variant={{type: 'caption'}}>
+                  variant={{ type: "caption" }}
+                >
                   {`${initAddress?.street} - ${initAddress?.city} `}
                 </Typography>
               </Pressable>
@@ -111,17 +116,19 @@ export const FilterBottomSheet = ({
                   ...styles.filterCard,
                   borderColor: colors.primary.primary100,
                   backgroundColor: colors.primary.primary100,
-                }}>
+                }}
+              >
                 <Typography
-                  style={{color: colors.white}}
+                  style={{ color: colors.white }}
                   bold
-                  variant={{type: 'caption'}}>
+                  variant={{ type: "caption" }}
+                >
                   {`${initAddress?.radio} Km`}
                 </Typography>
               </Pressable>
             </View>
 
-            <Typography variant={{type: 'body1'}}>
+            <Typography variant={{ type: "body1" }}>
               Categorias {`${filterCategories.length}/6`}
             </Typography>
             {/* <View style={styles.listFilter}>
@@ -156,15 +163,16 @@ export const FilterBottomSheet = ({
                     ...styles.filterCard,
                     borderColor: colors.primary.primary100,
                     backgroundColor: colors.primary.primary100,
-                  }}>
-                  <Text variant="bodySmall" style={{color: colors.white}}>
-                    {showAllCategories ? 'Mostrar menos' : 'Mostrar más'}
+                  }}
+                >
+                  <Text variant="bodySmall" style={{ color: colors.white }}>
+                    {showAllCategories ? "Mostrar menos" : "Mostrar más"}
                   </Text>
                 </TouchableOpacity>
               )}
             </View>
 
-            <Typography variant={{type: 'body1'}}>Tipo de empleo</Typography>
+            <Typography variant={{ type: "body1" }}>Tipo de empleo</Typography>
             <View style={styles.listFilter}>
               {loadingEmploye && <ActivityIndicator size={20} />}
               {dataTypeEmploye &&
@@ -181,24 +189,27 @@ export const FilterBottomSheet = ({
             </View>
             {!hasNonCalculableAmount() && (
               <>
-                <Typography variant={{type: 'body1'}}>
+                <Typography variant={{ type: "body1" }}>
                   Rango salarial
                 </Typography>
                 <View style={styles.listFilter}>
                   <Slider
-                    style={{width: '100%', height: 40}}
+                    style={{ width: "100%", height: 40 }}
                     minimumValue={0}
                     maximumValue={5000}
                     step={100}
                     minimumTrackTintColor={colors.primary.primary100}
                     value={sliderValue}
-                    onValueChange={value => handleFilterRange(value)}
+                    onValueChange={(value) => handleFilterRange(value)}
                   />
                   <View style={styles.informationSlider}>
                     {/* <Typography style={styles.text3} variant={{type: 'body2'}}>
                   s/ 0.50 por dia
                 </Typography> */}
-                    <Typography style={styles.text3} variant={{type: 'body2'}}>
+                    <Typography
+                      style={styles.text3}
+                      variant={{ type: "body2" }}
+                    >
                       {`Mayor a:  S/. ${numberWithCommas(sliderValue)}`}
                     </Typography>
                   </View>

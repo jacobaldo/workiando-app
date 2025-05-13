@@ -1,46 +1,46 @@
-import React, {useContext} from 'react';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons.js";
+import { StackScreenProps } from "@react-navigation/stack";
+import LottieView from "lottie-react-native";
+import React, { useContext } from "react";
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
   TouchableOpacity,
   View,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {styles} from './styles';
-import {colors} from '../../constants/colors';
-import {analizingDirections} from '../../utils/others';
-import {MyAppProps} from '../App/types';
-import {StackScreenProps} from '@react-navigation/stack';
-import {useLocationList} from './hooks';
-import {ThemeContext} from '../../provider/ThemeProvider';
-import LottieView from 'lottie-react-native';
-import {Text} from 'react-native-paper';
-import ToastController from '../../components/2.Molecules/ToastModal/ToastController';
-import {API_KEY} from '../../services/api';
+} from "react-native";
+import { showMessage } from "react-native-flash-message";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { Text } from "react-native-paper";
+import { colors } from "../../constants/colors";
+import { ThemeContext } from "../../provider/ThemeProvider";
+import { API_KEY } from "../../services/api";
+import { analizingDirections } from "../../utils/others";
+import { MyAppProps } from "../App/types";
+import { useLocationList } from "./hooks";
+import { styles } from "./styles";
 
-const {width} = Dimensions.get('window');
-interface Props extends StackScreenProps<MyAppProps, 'LocationList'> {}
-const LocationList = ({navigation}: Props) => {
-  const {theme} = useContext(ThemeContext);
+const { width } = Dimensions.get("window");
+interface Props extends StackScreenProps<MyAppProps, "LocationList"> {}
+const LocationList = ({ navigation }: Props) => {
+  const { theme } = useContext(ThemeContext);
   const {
     deleteUserLocation,
     confirmUserLocation,
     getByCurrentPosition,
     listAddresses,
     getLocation,
-  } = useLocationList({navigation});
+  } = useLocationList({ navigation });
 
   const renderItem = (item: any) => {
-    var address = item.item;
+    let address = item.item;
     const current = address.current;
 
     return (
       <View key={address.formatted_address} style={styles.item}>
         <View style={styles.iconItem}>
           <Icon
-            name={current ? 'pin' : 'pin-outline'}
+            name={current ? "pin" : "pin-outline"}
             color={
               current ? colors.primary.primary100 : colors.primary.primary60
             }
@@ -48,8 +48,9 @@ const LocationList = ({navigation}: Props) => {
           />
         </View>
         <TouchableOpacity
-          onPress={() => confirmUserLocation(address, item.index)}>
-          <View style={{width: width - 155}}>
+          onPress={() => confirmUserLocation(address, item.index)}
+        >
+          <View style={{ width: width - 155 }}>
             <Text
               style={[
                 styles.title,
@@ -58,7 +59,8 @@ const LocationList = ({navigation}: Props) => {
                     ? colors.primary.primary100
                     : colors.neutral.neutral400,
                 },
-              ]}>
+              ]}
+            >
               {address?.formatted_address}
             </Text>
             <Text
@@ -69,7 +71,8 @@ const LocationList = ({navigation}: Props) => {
                     ? colors.primary.primary40
                     : colors.neutral.neutral400,
                 },
-              ]}>
+              ]}
+            >
               {address?.city} - {address?.country}
             </Text>
           </View>
@@ -78,19 +81,20 @@ const LocationList = ({navigation}: Props) => {
         <TouchableOpacity
           onPress={() => {
             if (current) {
-              ToastController.showModal(
-                'No se puede eliminar el seleccionado..',
-                {type: 'info'},
-                'top',
-                true,
-              );
+              showMessage({
+                message: "Advertencia!!",
+                description: "No se puede eliminar el seleccionado..",
+                type: "info",
+                icon: "info",
+              });
             } else {
               deleteUserLocation(item.index);
             }
-          }}>
+          }}
+        >
           <View style={styles.deleteItem}>
             <Icon
-              name={current ? 'delete-off' : 'delete'}
+              name={current ? "delete-off" : "delete"}
               color={
                 current ? colors.primary.primary100 : colors.neutral.neutral400
               }
@@ -108,7 +112,8 @@ const LocationList = ({navigation}: Props) => {
       style={{
         ...styles.containerAdd,
         backgroundColor: theme.backgroundColor,
-      }}>
+      }}
+    >
       <GooglePlacesAutocomplete
         renderLeftButton={() => (
           <Icon name="map-marker" color={colors.primary.primary100} size={30} />
@@ -122,20 +127,20 @@ const LocationList = ({navigation}: Props) => {
             latitude: details?.geometry?.location.lat,
             longitude: details?.geometry?.location.lng,
           };
-          navigation.navigate('SelectLocation', {
+          navigation.navigate("SelectLocation", {
             data: dataJson,
             navigation: navigation,
           });
         }}
         query={{
           key: API_KEY,
-          language: 'es',
+          language: "es",
         }}
         enablePoweredByContainer={false}
         suppressDefaultStyles={true}
         filterReverseGeocodingByTypes={[
-          'locality',
-          'administrative_area_level_3',
+          "locality",
+          "administrative_area_level_3",
         ]}
         predefinedPlacesAlwaysVisible={true}
         numberOfLines={2}
@@ -143,14 +148,14 @@ const LocationList = ({navigation}: Props) => {
           textInputContainer: {
             borderRadius: 20,
             paddingHorizontal: 7.5,
-            flexDirection: 'row',
-            alignItems: 'center',
+            flexDirection: "row",
+            alignItems: "center",
           },
           textInput: {
             height: 55,
             color: theme.textColor,
             fontSize: 15,
-            fontFamily: 'Poppins-SemiBold',
+            fontFamily: "Poppins-SemiBold",
             flex: 1,
           },
           container: {
@@ -158,7 +163,7 @@ const LocationList = ({navigation}: Props) => {
             borderRadius: 20,
             borderWidth: 1,
             borderColor: theme.neutral300,
-            overflow: 'hidden',
+            overflow: "hidden",
           },
           predefinedPlacesDescription: {
             color: colors.neutral.neutral300,
@@ -175,20 +180,22 @@ const LocationList = ({navigation}: Props) => {
             height: 50,
           },
           description: {
-            fontFamily: 'Poppins-Light',
-            fontWeight: 'bold',
+            fontFamily: "Poppins-Light",
+            fontWeight: "bold",
             color: theme.textColor,
           },
         }}
       />
       <TouchableOpacity
         style={styles.currentLocation}
-        onPress={getByCurrentPosition}>
+        onPress={getByCurrentPosition}
+      >
         <View
           style={[
             styles.cicleMap,
             //   {backgroundColor: isDark ? '#1b1b1b' : background},
-          ]}>
+          ]}
+        >
           {getLocation ? (
             <ActivityIndicator
               animating={true}
@@ -208,12 +215,12 @@ const LocationList = ({navigation}: Props) => {
       </TouchableOpacity>
       <FlatList
         data={listAddresses}
-        renderItem={item => renderItem(item)}
+        renderItem={(item) => renderItem(item)}
         // keyExtractor={(address: any) => address?.index}
         ListEmptyComponent={
           <View>
             <LottieView
-              source={require('../../assets/lottie/location.json')}
+              source={require("../../assets/lottie/location.json")}
               resizeMode="contain"
               autoPlay
               loop
@@ -222,7 +229,8 @@ const LocationList = ({navigation}: Props) => {
             <Text
               theme={theme}
               variant="bodyMedium"
-              style={{textAlign: 'center'}}>
+              style={{ textAlign: "center" }}
+            >
               Registra ubicacion donde desea encontrar trabajo
             </Text>
           </View>

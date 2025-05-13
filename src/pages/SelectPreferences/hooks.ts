@@ -1,21 +1,21 @@
-import {useEffect, useState} from 'react';
-import useAxiosGet from '../../services/apiGet';
-import {Category} from '../ConfigureEmploye/types';
-import {SelectPreferencesProps} from './types';
-import useAxiosPut from '../../services/apiPut';
-import {useUser} from '../../provider/AuthProvider';
-import ToastController from '../../components/2.Molecules/ToastModal/ToastController';
+import { useEffect, useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useUser } from "../../provider/AuthProvider";
+import useAxiosGet from "../../services/apiGet";
+import useAxiosPut from "../../services/apiPut";
+import { Category } from "../ConfigureEmploye/types";
+import { SelectPreferencesProps } from "./types";
 
-export const useSelectProps = ({navigation}: SelectPreferencesProps) => {
+export const useSelectProps = ({ navigation }: SelectPreferencesProps) => {
   const {
-    authState: {user, token},
+    authState: { user, token },
     login,
   } = useUser();
-  const {data, getData, loading} = useAxiosGet<Category[]>('/category');
+  const { data, getData, loading } = useAxiosGet<Category[]>("/category");
   const [loadingPut, setLoadingPut] = useState<boolean>(false);
   const [filterCategories, setFilterCategories] = useState<string[]>([]);
   // console.log('------------------', user);
-  const {data: dataPut, putData} = useAxiosPut();
+  const { data: dataPut, putData } = useAxiosPut();
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,20 +56,22 @@ export const useSelectProps = ({navigation}: SelectPreferencesProps) => {
   //   verified: false,
   // };
   const handleFilterCategory = (filter: string) => {
-    setFilterCategories(prevCategories => {
+    setFilterCategories((prevCategories) => {
       if (prevCategories.includes(filter)) {
         // Si ya está seleccionada, la eliminamos
-        return prevCategories.filter(item => item !== filter);
+        return prevCategories.filter((item) => item !== filter);
       }
 
       // Si no está y hay menos de 6, la agregamos
       if (prevCategories.length >= 6) {
-        ToastController.showModal(
-          'Selecciona tus Preferencias de búqueda, mínimo 3 y máximo 6',
-          {type: 'info'},
-          'top',
-          true,
-        );
+        showMessage({
+          message: "Aviso!!",
+          description:
+            "Selecciona tus Preferencias de búqueda, mínimo 3 y máximo 6",
+          type: "info",
+          icon: "info",
+        });
+
         return prevCategories;
       }
 
@@ -99,7 +101,7 @@ export const useSelectProps = ({navigation}: SelectPreferencesProps) => {
       navigation.reset;
       navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{ name: "Home" }],
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

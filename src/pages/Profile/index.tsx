@@ -1,28 +1,28 @@
-import React, {useContext} from 'react';
-import {View, Image, Pressable} from 'react-native';
-import {Typography} from '../../components/Typography';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {Rating} from 'react-native-ratings';
-import {colors} from '../../constants/colors';
-import {styles} from './styles';
-import {ThemeContext} from '../../provider/ThemeProvider';
-import {useProfile} from './hooks';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Button} from 'react-native-paper';
-import {MyAppProps} from '../App/types';
-import {StackScreenProps} from '@react-navigation/stack';
-import {spacings} from '../../constants/spacings';
-import Histories from './Histories';
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import Icon from "@expo/vector-icons/FontAwesome.js";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
+import React, { useContext } from "react";
+import { Image, Pressable, View } from "react-native";
+import { Button } from "react-native-paper";
+import { Rating } from "react-native-ratings";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Typography } from "../../components/Typography";
+import { colors } from "../../constants/colors";
+import { spacings } from "../../constants/spacings";
+import { ThemeContext } from "../../provider/ThemeProvider";
+import { MyAppProps } from "../App/types";
+import Histories from "./Histories";
+import { useProfile } from "./hooks";
+import { styles } from "./styles";
 type ProfileProps = CompositeScreenProps<
-  StackScreenProps<MyAppProps, 'Profile'>,
-  DrawerScreenProps<any, 'Profile'>
+  StackScreenProps<MyAppProps, "Profile">,
+  DrawerScreenProps<any, "Profile">
 >;
-const Profile = ({navigation, route}: ProfileProps) => {
-  const {userData} = route?.params;
-  const {theme} = useContext(ThemeContext);
+const Profile = ({ navigation, route }: ProfileProps) => {
+  const { userData } = route?.params;
+  const { theme } = useContext(ThemeContext);
   const Tab = createMaterialTopTabNavigator();
 
   const {
@@ -39,8 +39,9 @@ const Profile = ({navigation, route}: ProfileProps) => {
 
   return (
     <SafeAreaView
-      style={{...styles.body, backgroundColor: theme.backgroundColor}}>
-      <View style={{flex: 1, marginBottom: userData ? 0 : 50}}>
+      style={{ ...styles.body, backgroundColor: theme.backgroundColor }}
+    >
+      <View style={{ flex: 1, marginBottom: userData ? 0 : 50 }}>
         <View style={styles.containerDetails}>
           <View style={styles.containerLogo}>
             <Image
@@ -48,8 +49,8 @@ const Profile = ({navigation, route}: ProfileProps) => {
               style={styles.imgPerfil}
               source={
                 user?.photo
-                  ? {uri: user.photo}
-                  : require('./../../assets/avatar.png')
+                  ? { uri: user.photo }
+                  : require("./../../assets/avatar.png")
               }
             />
             <Rating
@@ -69,13 +70,15 @@ const Profile = ({navigation, route}: ProfileProps) => {
               style={styles.info}
               bold
               variant={{
-                type: 'body1',
-              }}>{`${user?.name} ${user?.lastname}`}</Typography>
+                type: "body1",
+              }}
+            >{`${user?.name} ${user?.lastname}`}</Typography>
             <Typography
               style={styles.info}
               variant={{
-                type: 'caption',
-              }}>
+                type: "caption",
+              }}
+            >
               {user?.email}
             </Typography>
 
@@ -86,7 +89,7 @@ const Profile = ({navigation, route}: ProfileProps) => {
                 color={colors.primary.primary100}
                 style={styles.iconStyle}
               />
-              <Typography onPress={handlePhoneCall} variant={{type: 'body3'}}>
+              <Typography onPress={handlePhoneCall} variant={{ type: "body3" }}>
                 {user?.number}
               </Typography>
             </View>
@@ -108,21 +111,26 @@ const Profile = ({navigation, route}: ProfileProps) => {
               <Pressable style={styles.btnStyle} onPress={navigationEmployes}>
                 <Typography
                   style={styles.textColor}
-                  variant={{type: 'caption'}}>
+                  variant={{ type: "caption" }}
+                >
                   Editar
                 </Typography>
               </Pressable>
             )}
             <Pressable
               style={styles.btnStyle}
-              onPress={navigationUpdatePreferences}>
-              <Typography style={styles.textColor} variant={{type: 'caption'}}>
+              onPress={navigationUpdatePreferences}
+            >
+              <Typography
+                style={styles.textColor}
+                variant={{ type: "caption" }}
+              >
                 Preferencias
               </Typography>
             </Pressable>
           </View>
         </View>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Tab.Navigator
             screenOptions={{
               tabBarStyle: {
@@ -133,19 +141,23 @@ const Profile = ({navigation, route}: ProfileProps) => {
               // headerTitleStyle: {
               //   fontWeight: 'bold',
               // },
-            }}>
+            }}
+          >
             <Tab.Screen
               name="PublishedRegistered"
               component={Histories}
-              options={{tabBarLabel: 'Experiencias'}}
-              initialParams={{userData: userData?.user, type: 'experience'}}
+              options={{ tabBarLabel: "Experiencias" }}
+              initialParams={{ userData: userData?.user, type: "experience" }}
             />
 
             <Tab.Screen
               name="PublishedExpired"
               component={Histories}
-              options={{tabBarLabel: 'Calificaciones'}}
-              initialParams={{userData: userData?.user, type: 'califications'}}
+              options={{ tabBarLabel: "Calificaciones" }}
+              initialParams={{
+                userData: userData?.user,
+                type: "califications",
+              }}
             />
           </Tab.Navigator>
         </View>
@@ -156,12 +168,14 @@ const Profile = ({navigation, route}: ProfileProps) => {
             height: 40,
             marginBottom: spacings.s2,
             marginHorizontal: spacings.s2,
-          }}>
+          }}
+        >
           <Button
             loading={loading}
             theme={theme}
             mode="contained"
-            onPress={acceptWorker}>
+            onPress={acceptWorker}
+          >
             Aceptar
           </Button>
         </View>

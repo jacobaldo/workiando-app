@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { CountryCode } from "react-native-country-picker-modal";
+import { showMessage } from "react-native-flash-message";
 import * as Yup from "yup";
-import ToastController from "../../components/2.Molecules/ToastModal/ToastController";
 import useAxiosPost from "../../services/apiPost";
 import { Register } from "./types";
 
@@ -43,12 +43,13 @@ const useRegister = ({ login }: any) => {
         setLoading(false);
       })
       .catch((error) => {
-        ToastController.showModal(
-          error.message ?? "Error al obtener datos del usuario",
-          { type: "danger" },
-          "top",
-          true
-        );
+        showMessage({
+          message: "Error",
+          description: error.message ?? "Error al obtener datos del usuario",
+          type: "danger",
+          icon: "danger",
+        });
+
         setLoading(false);
       });
   };
@@ -62,12 +63,7 @@ const useRegister = ({ login }: any) => {
     //   setLoading(false);
     // })
     // .catch(e => {
-    //   ToastController.showModal(
-    //     'Error al registrar en Usuario1' + e,
-    //     {type: 'danger'},
-    //     'top',
-    //     true,
-    //   );
+
     // });
   };
 

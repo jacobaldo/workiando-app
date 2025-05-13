@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import ToastController from "../../components/2.Molecules/ToastModal/ToastController";
 
+import { showMessage } from "react-native-flash-message";
 import useAxiosPost from "../../services/apiPost";
 // import {
 //   GoogleSignin,
@@ -75,12 +75,13 @@ const useLogin = ({ navigation, login }: any) => {
         .catch((error) => {
           console.log("errrr", error);
 
-          ToastController.showModal(
-            error.message ?? "Error al obtener datos del usuario",
-            { type: "danger" },
-            "top",
-            true
-          );
+          showMessage({
+            message: "Error!!",
+            description: error.message ?? "Error al obtener datos del usuario",
+            type: "danger",
+            icon: "danger",
+          });
+
           setLoading(false);
         });
     }

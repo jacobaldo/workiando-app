@@ -1,12 +1,12 @@
-import {useState} from 'react';
-import ToastController from '../components/2.Molecules/ToastModal/ToastController';
-import {createAxiosInstance} from './axiosInstance';
-import {useUser} from '../provider/AuthProvider';
+import { useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useUser } from "../provider/AuthProvider";
+import { createAxiosInstance } from "./axiosInstance";
 
 const useAxiosPut = () => {
   const {
     login,
-    authState: {token},
+    authState: { token },
   } = useUser();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,18 +25,18 @@ const useAxiosPut = () => {
       setData(response.data);
     } catch (e: any) {
       setError(e);
-      ToastController.showModal(
-        'Error de conexion',
-        {type: 'danger'},
-        'top',
-        true,
-      );
+      showMessage({
+        message: "Error!!",
+        description: "Error de conexion",
+        type: "danger",
+        icon: "danger",
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  return {data, loading, error, putData};
+  return { data, loading, error, putData };
 };
 
 export default useAxiosPut;

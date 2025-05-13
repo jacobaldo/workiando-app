@@ -1,31 +1,31 @@
-import {useEffect} from 'react';
-import {User} from '../../provider/types';
-import useAxiosGet from '../../services/apiGet';
-import {ExistingRequest, WorkDetailProps} from './types';
-import useAxiosPost from '../../services/apiPost';
-import {useUser} from '../../provider/AuthProvider';
-import ToastController from '../../components/2.Molecules/ToastModal/ToastController';
-import {useDispatch, useSelector} from 'react-redux';
-import {Subscription} from '../Search/types';
-import {setSubscription} from '../../redux/Subscriptions/subscriptionAcction';
+import { useEffect } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useDispatch, useSelector } from "react-redux";
+import { useUser } from "../../provider/AuthProvider";
+import { User } from "../../provider/types";
+import { setSubscription } from "../../redux/Subscriptions/subscriptionAcction";
+import useAxiosGet from "../../services/apiGet";
+import useAxiosPost from "../../services/apiPost";
+import { Subscription } from "../Search/types";
+import { ExistingRequest, WorkDetailProps } from "./types";
 
-export const useWorkDetail = ({body, navigation}: WorkDetailProps) => {
+export const useWorkDetail = ({ body, navigation }: WorkDetailProps) => {
   const {
-    authState: {user: myUser},
+    authState: { user: myUser },
   } = useUser();
   const {
     // subscription,
     status,
   } = useSelector((state: any) => state.subscription);
   const dispatch = useDispatch();
-  const {loading: loadingPost, postData} = useAxiosPost();
+  const { loading: loadingPost, postData } = useAxiosPost();
   const {
     data: user,
     getData,
     loading,
     refreshData,
   } = useAxiosGet<User>(`/auth/${body.admin}`);
-  const {data: existingRequest, getData: existingGetData} =
+  const { data: existingRequest, getData: existingGetData } =
     useAxiosGet<ExistingRequest>(`/requests/${myUser?._id}/${body._id}`);
 
   useEffect(() => {
@@ -44,12 +44,12 @@ export const useWorkDetail = ({body, navigation}: WorkDetailProps) => {
       dataSubscription.membership &&
         dispatch(setSubscription(dataSubscription.membership));
     } else {
-      ToastController.showModal(
-        `${dataSubscription?.message}`,
-        {type: 'success'},
-        'top',
-        true,
-      );
+      showMessage({
+        message: "Felicidades!!",
+        description: `${dataSubscription?.message}`,
+        type: "success",
+        icon: "success",
+      });
     }
   };
   useEffect(() => {
@@ -74,37 +74,40 @@ export const useWorkDetail = ({body, navigation}: WorkDetailProps) => {
     return false;
   };
   const onPressApply = () => {
-    const newBody = {userId: myUser?._id, worksId: body._id};
+    const newBody = { userId: myUser?._id, worksId: body._id };
 
-    if (status === 'active') {
-      postData('/requests', newBody).then(() => {
-        ToastController.showModal(
-          'Solicitud exitosa...',
-          {type: 'success'},
-          'top',
-          true,
-        );
+    if (status === "active") {
+      postData("/requests", newBody).then(() => {
+        showMessage({
+          message: "Felicidades!!",
+          description: "Solicitud exitosa...",
+          type: "success",
+          icon: "success",
+        });
+
         navigation.reset({
           index: 0,
-          routes: [{name: 'Home'}],
+          routes: [{ name: "Home" }],
         });
       });
-    } else if (status === 'inactive') {
-      ToastController.showModal(
-        'Tu Membresía esta inactiva o vencida',
-        {type: 'danger'},
-        'top',
-        true,
-      );
-      navigation.navigate('SuscribeMembershipUser', {navigation});
+    } else if (status === "inactive") {
+      showMessage({
+        message: "Error!!",
+        description: "Tu Membresía esta inactiva o vencida",
+        type: "danger",
+        icon: "danger",
+      });
+
+      navigation.navigate("SuscribeMembershipUser", { navigation });
     } else {
-      ToastController.showModal(
-        'No tienes Membresía, Suscríbete',
-        {type: 'danger'},
-        'top',
-        true,
-      );
-      navigation.navigate('SuscribeMembershipUser', {navigation});
+      showMessage({
+        message: "Error!!",
+        description: "No tienes Membresía, Suscríbete",
+        type: "danger",
+        icon: "danger",
+      });
+
+      navigation.navigate("SuscribeMembershipUser", { navigation });
     }
   };
 

@@ -1,7 +1,7 @@
-import {useState} from 'react';
-import ToastController from '../components/2.Molecules/ToastModal/ToastController';
-import {useUser} from '../provider/AuthProvider';
-import {createAxiosInstance} from './axiosInstance';
+import { useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useUser } from "../provider/AuthProvider";
+import { createAxiosInstance } from "./axiosInstance";
 
 interface ApiResponse<T = any> {
   status: number;
@@ -11,13 +11,13 @@ interface ApiResponse<T = any> {
 const useAxiosPost = () => {
   const {
     login,
-    authState: {token},
+    authState: { token },
   } = useUser();
   const [loading, setLoading] = useState<boolean>(false);
 
   const postData = async <T>(
     url: string,
-    requestData: any,
+    requestData: any
   ): Promise<ApiResponse<T>> => {
     setLoading(true);
 
@@ -34,18 +34,18 @@ const useAxiosPost = () => {
           data: response.data as T,
         }); // Resuelve con el estatus y los datos
       } catch (e: any) {
-        ToastController.showModal(
-          'Error de conexion',
-          {type: 'danger'},
-          'top',
-          true,
-        );
+        showMessage({
+          message: "Error!!",
+          description: "Error de conexion",
+          type: "danger",
+          icon: "danger",
+        });
 
-        console.log('Error:', e);
+        console.log("Error:", e);
         reject({
           status: e.response?.status,
           message:
-            e.response?.data?.message || e.message || 'Error desconocido',
+            e.response?.data?.message || e.message || "Error desconocido",
         });
       } finally {
         setLoading(false);
@@ -53,7 +53,7 @@ const useAxiosPost = () => {
     });
   };
 
-  return {loading, postData};
+  return { loading, postData };
 };
 
 export default useAxiosPost;

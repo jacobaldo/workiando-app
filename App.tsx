@@ -1,4 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import FlashMessage from "react-native-flash-message";
 import Geocoder from "react-native-geocoding";
@@ -13,7 +14,7 @@ import reducers from "./src/redux";
 import { API_KEY } from "./src/services/api";
 import { navigationRef } from "./src/utils/navigationref/RootNavigation";
 
-Geocoder.init(API_KEY, { language: "es" }); // TO-REVIEW: disabled temporarily
+Geocoder.init(API_KEY, { language: "es" });
 const App = () => {
   const store = createStore(reducers);
   const { theme } = useTheme();
@@ -26,6 +27,7 @@ const App = () => {
             <AuthProvider>
               <HomeStack />
             </AuthProvider>
+            <StatusBar style="auto" />
             <FlashMessage position="top" />
           </NavigationContainer>
         </Provider>

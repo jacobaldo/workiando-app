@@ -1,22 +1,22 @@
-import React, {useContext} from 'react';
-import {Image, View} from 'react-native';
+import Icon from "@expo/vector-icons/Feather.js";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
-} from '@react-navigation/drawer';
-import {useUser} from '../../../../provider/AuthProvider';
-import {styles} from './styles';
-import Icon from 'react-native-vector-icons/Feather';
-import {colors} from '../../../../constants/colors';
-import LinearGradient from 'react-native-linear-gradient';
-import {ThemeContext} from '../../../../provider/ThemeProvider';
-import {Card, Drawer, Switch, Text} from 'react-native-paper';
-import {SafeAreaView} from 'react-native-safe-area-context';
+} from "@react-navigation/drawer";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useContext } from "react";
+import { Image, View } from "react-native";
+import { Card, Drawer, Switch, Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { colors } from "../../../../constants/colors";
+import { useUser } from "../../../../provider/AuthProvider";
+import { ThemeContext } from "../../../../provider/ThemeProvider";
+import { styles } from "./styles";
 
-const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
-  const {theme, toggleTheme, isDarkMode} = useContext(ThemeContext);
+const DrawerContent = ({ navigation }: DrawerContentComponentProps) => {
+  const { theme, toggleTheme, isDarkMode } = useContext(ThemeContext);
   const {
-    authState: {user, isLoggetIn},
+    authState: { user, isLoggetIn },
     logout,
   } = useUser();
 
@@ -31,20 +31,23 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
       style={{
         ...styles.containerAll,
         backgroundColor: colors.primary.primary100,
-      }}>
-      <View style={{backgroundColor: theme.backgroundColor, flex: 1}}>
+      }}
+    >
+      <View style={{ backgroundColor: theme.backgroundColor, flex: 1 }}>
         <DrawerContentScrollView
           contentContainerStyle={{
             ...styles.header,
             backgroundColor: colors.error.error100,
             paddingTop: 0,
-          }}>
+          }}
+        >
           <View>
             <LinearGradient
               colors={[colors.primary.primary100, colors.primary.primary100]}
-              style={styles.container}>
+              style={styles.container}
+            >
               <Image
-                source={require('../../../../assets/banner.png')}
+                source={require("../../../../assets/banner.png")}
                 style={styles.headerImage}
                 resizeMode="contain"
               />
@@ -67,7 +70,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
               style={{
                 ...styles.containerList,
                 backgroundColor: theme.backgroundColor,
-              }}>
+              }}
+            >
               <Drawer.Section title="">
                 <Drawer.Item
                   theme={theme}
@@ -76,7 +80,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                   }}
                   icon="clipboard-search-outline"
                   label="Mis Anuncios"
-                  onPress={() => navigation.navigate('MyPublishedWorks')}
+                  onPress={() => navigation.navigate("MyPublishedWorks")}
                 />
                 <Drawer.Item
                   theme={theme}
@@ -85,7 +89,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                   }}
                   icon="clipboard-search-outline"
                   label="Postulantes"
-                  onPress={() => navigation.navigate('ProposalsReceived')}
+                  onPress={() => navigation.navigate("ProposalsReceived")}
                 />
                 <Drawer.Item
                   theme={theme}
@@ -95,7 +99,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                   // active
                   icon="text-box-search"
                   label="Anuncios Solicitados"
-                  onPress={() => navigation.navigate('RequestedEmployes')}
+                  onPress={() => navigation.navigate("RequestedEmployes")}
                 />
                 <Drawer.Item
                   theme={theme}
@@ -104,27 +108,29 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                   }}
                   icon="clipboard-search-outline"
                   label="Solicitar membresia"
-                  onPress={() => navigation.navigate('SuscribeMembershipUser')}
+                  onPress={() => navigation.navigate("SuscribeMembershipUser")}
                 />
               </Drawer.Section>
-              {user?.role[0].label === 'Admin' && (
+              {user?.role[0].label === "Admin" && (
                 <Drawer.Section
                   title="Administrador:"
                   theme={theme}
-                  style={{backgroundColor: theme.backgroundColor}}>
+                  style={{ backgroundColor: theme.backgroundColor }}
+                >
                   <Card
                     elevation={5}
                     onPress={() =>
-                      navigation.navigate('AdminUserAndWorks', {
-                        type: 'user',
-                        title: 'Usuarios',
+                      navigation.navigate("AdminUserAndWorks", {
+                        type: "user",
+                        title: "Usuarios",
                       })
                     }
                     contentStyle={styles.optionsAdmin}
                     style={styles.optionsAdmin2}
-                    theme={theme}>
+                    theme={theme}
+                  >
                     <Card.Title
-                      subtitleStyle={{color: theme.colors.onBackground}}
+                      subtitleStyle={{ color: theme.colors.onBackground }}
                       title=""
                       subtitle="Usuarios"
                       // left={() => (
@@ -140,18 +146,19 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                   <Card
                     elevation={5}
                     onPress={() =>
-                      navigation.navigate('AdminUserAndWorks', {
-                        type: 'work',
-                        title: 'Anuncios',
+                      navigation.navigate("AdminUserAndWorks", {
+                        type: "work",
+                        title: "Anuncios",
                       })
                     }
                     contentStyle={styles.optionsAdmin}
                     style={styles.optionsAdmin2}
-                    theme={theme}>
+                    theme={theme}
+                  >
                     <Card.Title
                       title=""
                       subtitle="Anuncios"
-                      subtitleStyle={{color: theme.colors.onBackground}}
+                      subtitleStyle={{ color: theme.colors.onBackground }}
                       // left={props => (
                       //   <LottieView
                       //     source={require('../../../../assets/lottie/worker.json')}
@@ -167,7 +174,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     style={{
                       ...styles.options2,
                     }}
-                    icon={prps => (
+                    icon={(prps) => (
                       <Icon
                         {...prps}
                         name="file-plus"
@@ -177,7 +184,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     )}
                     label="Crear Anuncio de otros"
                     onPress={() =>
-                      navigation.navigate('ConfigureEmploye', {
+                      navigation.navigate("ConfigureEmploye", {
                         navigation: navigation,
                         admin: true,
                       })
@@ -188,7 +195,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     style={{
                       ...styles.options2,
                     }}
-                    icon={prps => (
+                    icon={(prps) => (
                       <Icon
                         {...prps}
                         name="file-plus"
@@ -198,8 +205,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     )}
                     label="Crear categoría"
                     onPress={() =>
-                      navigation.navigate('CreateCategories', {
-                        type: 'category',
+                      navigation.navigate("CreateCategories", {
+                        type: "category",
                         navigation,
                       })
                     }
@@ -209,7 +216,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     style={{
                       ...styles.options2,
                     }}
-                    icon={prps => (
+                    icon={(prps) => (
                       <Icon
                         {...prps}
                         name="file-plus"
@@ -219,8 +226,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     )}
                     label="Crear tipo de empleo"
                     onPress={() =>
-                      navigation.navigate('CreateCategories', {
-                        type: 'typeEmploye',
+                      navigation.navigate("CreateCategories", {
+                        type: "typeEmploye",
                         navigation,
                       })
                     }
@@ -230,7 +237,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     style={{
                       ...styles.options2,
                     }}
-                    icon={prps => (
+                    icon={(prps) => (
                       <Icon
                         {...prps}
                         name="file-plus"
@@ -240,8 +247,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                     )}
                     label="Crear Membresias"
                     onPress={() =>
-                      navigation.navigate('CreateCategories', {
-                        type: 'membership',
+                      navigation.navigate("CreateCategories", {
+                        type: "membership",
                         navigation,
                       })
                     }
@@ -264,7 +271,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
               <Icon name="sun" size={20} color={theme.textColor} />
             )
           }
-          label={`Tema ${isDarkMode ? 'oscuro' : 'claro'}`}
+          label={`Tema ${isDarkMode ? "oscuro" : "claro"}`}
           right={() => (
             <Switch value={isDarkMode} onValueChange={toggleTheme} />
           )}

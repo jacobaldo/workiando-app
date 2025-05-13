@@ -1,9 +1,8 @@
-import {useState} from 'react';
-import {ConfirmPayEmployeProps, DataEmploye, PostEmploye} from './types';
-import {useUser} from '../../provider/AuthProvider';
-import moment from 'moment';
-import useAxiosPost from '../../services/apiPost';
-import ToastController from '../../components/2.Molecules/ToastModal/ToastController';
+import moment from "moment";
+import { useState } from "react";
+import { useUser } from "../../provider/AuthProvider";
+import useAxiosPost from "../../services/apiPost";
+import { ConfirmPayEmployeProps, DataEmploye, PostEmploye } from "./types";
 
 // import {formatDateWithSlash} from '../../utils/formatDate.util';
 // import {numberWithCommas} from '../../utils/currency/currency.utils';
@@ -11,11 +10,12 @@ import ToastController from '../../components/2.Molecules/ToastModal/ToastContro
 
 // import {Linking} from 'react-native';
 // import {NUM_ADMIN} from '../../services/api';
-import {removePushEmploye} from '../../provider/pushEmploye';
-import {NUM_ADMIN} from '../../services/api';
-import {formatDateWithSlash} from '../../utils/formatDate.util';
-import {numberWithCommas} from '../../utils/currency/currency.utils';
-import {Linking} from 'react-native';
+import { Linking } from "react-native";
+import { showMessage } from "react-native-flash-message";
+import { removePushEmploye } from "../../provider/pushEmploye";
+import { NUM_ADMIN } from "../../services/api";
+import { numberWithCommas } from "../../utils/currency/currency.utils";
+import { formatDateWithSlash } from "../../utils/formatDate.util";
 
 const useConfirmPayEmployes = ({
   navigation,
@@ -23,14 +23,14 @@ const useConfirmPayEmployes = ({
   admin,
 }: ConfirmPayEmployeProps) => {
   const {
-    authState: {user},
+    authState: { user },
   } = useUser();
   // let {initAddress} = useSelector((store: any) => store?.data);
-  const [payMetod, setPayMetod] = useState('yape');
+  const [payMetod, setPayMetod] = useState("yape");
   const [termCondition, setTermCondition] = useState(false);
-  const {postData, loading} = useAxiosPost();
+  const { postData, loading } = useAxiosPost();
   const addDays = (days: number) => {
-    return moment(new Date()).add(days, 'days').toDate();
+    return moment(new Date()).add(days, "days").toDate();
   };
 
   const navigateModal = async () => {
@@ -41,9 +41,9 @@ const useConfirmPayEmployes = ({
       typeEmploye: data?.idEmploye,
       idMembership: data?.idMembership,
       description: data?.description,
-      workType: 'service',
+      workType: "service",
       contact: admin
-        ? {name: data.nameuserJob, phone: data.phoneuserJob}
+        ? { name: data.nameuserJob, phone: data.phoneuserJob }
         : null,
       date: {
         dateExpired: addDays(data?.membership?.duration ?? 0),
@@ -62,36 +62,36 @@ const useConfirmPayEmployes = ({
     }
 
     try {
-      const response = await postData<PostEmploye>('/works', registerWorkValue);
+      const response = await postData<PostEmploye>("/works", registerWorkValue);
 
       if (response.status === 200) {
-        ToastController.showModal(
-          'Se registró correctamente',
-          {type: 'success'},
-          'top',
-          true,
-        );
+        showMessage({
+          message: "Felicidades!!",
+          description: "Se registró correctamente",
+          type: "success",
+          icon: "success",
+        });
 
         await removePushEmploye();
         navigation.reset({
           index: 0,
-          routes: [{name: 'Home'}],
+          routes: [{ name: "Home" }],
         });
         sendToWhatsAppNumber(response?.data?.data, NUM_ADMIN);
       }
     } catch (error: any) {
       // Manejo de errores si algo falla
-      ToastController.showModal(
-        error?.message ?? 'Ocurrió un error inesperado',
-        {type: 'danger'},
-        'top',
-        true,
-      );
+      showMessage({
+        message: "Error!!",
+        description: error?.message ?? "Ocurrió un error inesperado",
+        type: "danger",
+        icon: "danger",
+      });
     }
   };
   const sendToWhatsAppNumber = async (
     datasend: DataEmploye,
-    phoneNumber: string,
+    phoneNumber: string
   ) => {
     try {
       const voucherMessage = `
@@ -99,7 +99,7 @@ const useConfirmPayEmployes = ({
       🔑 Código de anuncio : ${datasend?.paymentCode}
       💳 **Método de pago**: Yape
       📅 **Fecha de publicación**: ${formatDateWithSlash(
-        datasend.createdAt.toString(),
+        datasend.createdAt.toString()
       )}
       💵 **Monto abonado**: S/ ${numberWithCommas(datasend.idMembership.price)}
       👤 **Cliente**: ${user?.name} ${user?.lastname}
@@ -110,15 +110,15 @@ const useConfirmPayEmployes = ({
       💡 **Gracias, espero su pronta respuesta!**
       `;
       const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(
-        voucherMessage,
+        voucherMessage
       )}`;
       Linking.openURL(url);
     } catch (error) {
-      console.error('Error al enviar mensaje a WhatsApp:', error);
+      console.error("Error al enviar mensaje a WhatsApp:", error);
     }
   };
   const navigateTerm = () => {
-    navigation.navigate('TermsAndConditions', {navigation});
+    navigation.navigate("TermsAndConditions", { navigation });
   };
 
   return {

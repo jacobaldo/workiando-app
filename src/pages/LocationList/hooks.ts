@@ -1,60 +1,61 @@
-import {useEffect, useState} from 'react';
-import ToastController from '../../components/2.Molecules/ToastModal/ToastController';
-import {LocationListProps} from './types';
-import {useDispatch} from 'react-redux';
+import { useEffect, useState } from "react";
+import { showMessage } from "react-native-flash-message";
+import { useDispatch } from "react-redux";
 import {
   deleteAddressSelected,
   getListAddresses,
   saveAddressSelected,
   saveLocationUser,
-} from '../../provider/AddressAsyncStore';
+} from "../../provider/AddressAsyncStore";
+import { SaveInitAddress } from "../../redux/InitAddress/AddressAcction";
 import {
   getAddress,
   getPosition,
   locationPermissions,
-} from '../../utils/geolocation';
-import {SaveInitAddress} from '../../redux/InitAddress/AddressAcction';
+} from "../../utils/geolocation";
+import { LocationListProps } from "./types";
 
-export const useLocationList = ({navigation}: LocationListProps) => {
+export const useLocationList = ({ navigation }: LocationListProps) => {
   const [listAddresses, setListAddresses] = useState<any>([]);
   const [getLocation, setGetLocation] = useState(false);
   const dispatch = useDispatch();
 
   const getAddresses = async () => {
     const listAddressesLocal = await getListAddresses();
+
     setListAddresses(listAddressesLocal);
   };
 
   const getByCurrentPosition = async () => {
     const resLocation = await locationPermissions();
-    if (resLocation === 'granted') {
+    if (resLocation === "granted") {
       setGetLocation(true);
       getPosition(
-        async position => {
+        async (position) => {
           const address = await getAddress(position.coords);
           setGetLocation(false);
 
           if (address) {
-            navigation.navigate('SelectLocation', {
+            navigation.navigate("SelectLocation", {
               data: address,
               navigation: navigation,
             });
           }
         },
-        error => {
+        (error) => {
           setGetLocation(false);
 
           console.log(error);
         },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
     } else {
-      ToastController.showModal(
-        'Error en los permisos de ubicacion',
-        {type: 'danger'},
-        'top',
-        true,
-      );
+      showMessage({
+        message: "Error!!",
+        description: "Error en los permisos de ubicacion",
+        type: "danger",
+        icon: "danger",
+      });
     }
   };
 
