@@ -1,6 +1,6 @@
-import {MutableRefObject} from 'react';
-import {ViewStyle} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import { MutableRefObject } from "react";
+import { ViewStyle } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 
 export interface Props {
   label: string;
@@ -12,12 +12,12 @@ export interface Props {
   onChange: (value: string) => void;
   onBlur?: () => void;
   usedSpecialCharacters?: boolean;
-  variant?: 'default' | 'autoHeight';
+  variant?: "default" | "autoHeight";
   isRequired?: boolean;
   requiredComment?: string;
   autoFocus?: boolean;
   styleContainer?: ViewStyle;
-  rightAdornment?: JSX.Element;
+  rightAdornment?: React.ReactNode;
   numberOfLines?: number;
   scrollEnabled?: boolean;
   multiline?: boolean;

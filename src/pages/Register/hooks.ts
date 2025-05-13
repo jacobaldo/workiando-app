@@ -1,28 +1,28 @@
-import {useState} from 'react';
-import * as Yup from 'yup';
-import {useFormik} from 'formik';
-import {Register} from './types';
-import ToastController from '../../components/2.Molecules/ToastModal/ToastController';
-import useAxiosPost from '../../services/apiPost';
-import {CountryCode} from 'react-native-country-picker-modal';
+import { useFormik } from "formik";
+import { useState } from "react";
+import { CountryCode } from "react-native-country-picker-modal";
+import * as Yup from "yup";
+import ToastController from "../../components/2.Molecules/ToastModal/ToastController";
+import useAxiosPost from "../../services/apiPost";
+import { Register } from "./types";
 
-const useRegister = ({login}: any) => {
-  const {postData} = useAxiosPost();
+const useRegister = ({ login }: any) => {
+  const { postData } = useAxiosPost();
   const [loading, setLoading] = useState<boolean>(false);
-  const [countryCode, setCountryCode] = useState<CountryCode>('PE');
+  const [countryCode, setCountryCode] = useState<CountryCode>("PE");
 
   const RegistrationSchema = Yup.object().shape({
-    name: Yup.string().required('Ingresa tu nombre'),
-    lastName: Yup.string().required('Ingresa tu Apellido'),
+    name: Yup.string().required("Ingresa tu nombre"),
+    lastName: Yup.string().required("Ingresa tu Apellido"),
     codeNumber: Yup.string(),
-    number: Yup.string().required('Ingresa numero de celular'),
-    email: Yup.string().email('Correo invalido').required('Ingresa tu Correo'),
+    number: Yup.string().required("Ingresa numero de celular"),
+    email: Yup.string().email("Correo invalido").required("Ingresa tu Correo"),
     password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Contraseña diferente')
-      .required('Ingresa de nuevo la contraseña'),
+      .oneOf([Yup.ref("password"), null], "Contraseña diferente")
+      .required("Ingresa de nuevo la contraseña"),
   });
   const handleRegister = async (values: Register) => {
     const registerValue = {
@@ -32,22 +32,22 @@ const useRegister = ({login}: any) => {
       codeNumber: values.codeNumber,
       number: values.number,
       password: values.password,
-      source: 'EMAIL',
+      source: "EMAIL",
     };
 
-    postData<any>('/auth/signup', registerValue)
-      .then(res => {
+    postData<any>("/auth/signup", registerValue)
+      .then((res) => {
         if (res.status === 200) {
           login(res.data.user, res.data.auth);
         }
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         ToastController.showModal(
-          error.message ?? 'Error al obtener datos del usuario',
-          {type: 'danger'},
-          'top',
-          true,
+          error.message ?? "Error al obtener datos del usuario",
+          { type: "danger" },
+          "top",
+          true
         );
         setLoading(false);
       });
@@ -73,13 +73,13 @@ const useRegister = ({login}: any) => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      number: '',
-      codeNumber: '',
+      name: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      number: "",
+      codeNumber: "",
     },
     validationSchema: RegistrationSchema,
     onSubmit: (values: Register) => {
@@ -90,7 +90,7 @@ const useRegister = ({login}: any) => {
   const handleCountryChange = (country: any) => {
     formik.handleChange({
       target: {
-        name: 'codeNumber',
+        name: "codeNumber",
         value: `+${country.callingCode[0]}`,
       },
     });

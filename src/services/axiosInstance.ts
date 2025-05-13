@@ -1,10 +1,10 @@
-import axios from 'axios';
-import {CONFIG_URL} from './api';
+import axios from "axios";
+import { CONFIG_URL } from "./api";
 
 const PUBLIC_ENDPOINTS = [
-  '/auth/signin',
-  '/auth/signup',
-  '/auth/refresh-token',
+  "/auth/signin",
+  "/auth/signup",
+  "/auth/refresh-token",
 ];
 
 type CreateAxiosParams = {
@@ -25,7 +25,7 @@ const createAxiosInstance = ({
   // Refresca el token en caso de que expire
   const onRefreshToken = async (): Promise<string> => {
     if (!refreshToken) {
-      throw new Error('No refresh token available');
+      throw new Error("No refresh token available");
     }
 
     try {
@@ -41,10 +41,10 @@ const createAxiosInstance = ({
         login(user, response?.data?.auth);
         return newToken;
       } else {
-        throw new Error('Failed to refresh token');
+        throw new Error("Failed to refresh token");
       }
     } catch (error) {
-      console.log('Error al refrescar el token:', error);
+      console.log("Error al refrescar el token:", error);
       throw error;
     }
   };
@@ -52,8 +52,8 @@ const createAxiosInstance = ({
   // Interceptor de request
   instance.interceptors.request.use(
     async (config: any) => {
-      const isPublic = PUBLIC_ENDPOINTS.some(endpoint =>
-        config.url.includes(endpoint),
+      const isPublic = PUBLIC_ENDPOINTS.some((endpoint) =>
+        config.url.includes(endpoint)
       );
 
       if (token && !isPublic) {
@@ -62,17 +62,17 @@ const createAxiosInstance = ({
 
       return config;
     },
-    error => Promise.reject(error),
+    (error) => Promise.reject(error)
   );
 
   // Interceptor de response
   instance.interceptors.response.use(
-    response => response,
-    async error => {
+    (response) => response,
+    async (error) => {
       const originalRequest = error.config;
 
-      const isPublic = PUBLIC_ENDPOINTS.some(endpoint =>
-        originalRequest.url.includes(endpoint),
+      const isPublic = PUBLIC_ENDPOINTS.some((endpoint) =>
+        originalRequest.url.includes(endpoint)
       );
 
       if (
@@ -95,10 +95,10 @@ const createAxiosInstance = ({
       }
 
       return Promise.reject(error);
-    },
+    }
   );
 
   return instance;
 };
 
-export {createAxiosInstance};
+export { createAxiosInstance };

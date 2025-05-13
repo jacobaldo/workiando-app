@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useContext } from "react";
 
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "@expo/vector-icons/Feather.js";
 import { colors } from "../../constants/colors";
 import { ThemeContext } from "../../provider/ThemeProvider";
 import Favorities from "../Favorites";

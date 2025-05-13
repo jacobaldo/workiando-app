@@ -1,30 +1,30 @@
-import React, {useContext} from 'react';
+import React, { useContext } from "react";
 import {
   Image,
+  Linking,
   RefreshControl,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from "react-native";
 
-import {Typography} from '../../components/Typography';
-import {styles} from './styles';
-import {colors} from '../../constants/colors';
-import {Rating} from 'react-native-ratings';
-import Icon from 'react-native-vector-icons/Feather';
-import {Button} from '../../components/Button';
-import {StackScreenProps} from '@react-navigation/stack';
-import {MyAppProps} from '../App/types';
-import {useWorkDetail} from './hooks';
-import {numberWithCommas} from '../../utils/currency/currency.utils';
-import {ThemeContext} from '../../provider/ThemeProvider';
-import {hideEmail, hideAddress, hidePhoneNumber} from '../../utils/hide';
-import {Linking} from 'react-native';
-interface Props extends StackScreenProps<MyAppProps, 'WorkDetail'> {}
-const WorkDetail = ({navigation, route}: Props) => {
-  const {body} = route.params;
-  const {theme} = useContext(ThemeContext);
+import Icon from "@expo/vector-icons/Feather.js";
+import { StackScreenProps } from "@react-navigation/stack";
+import { Rating } from "react-native-ratings";
+import { Button } from "../../components/Button";
+import { Typography } from "../../components/Typography";
+import { colors } from "../../constants/colors";
+import { ThemeContext } from "../../provider/ThemeProvider";
+import { numberWithCommas } from "../../utils/currency/currency.utils";
+import { hideAddress, hideEmail, hidePhoneNumber } from "../../utils/hide";
+import { MyAppProps } from "../App/types";
+import { useWorkDetail } from "./hooks";
+import { styles } from "./styles";
+interface Props extends StackScreenProps<MyAppProps, "WorkDetail"> {}
+const WorkDetail = ({ navigation, route }: Props) => {
+  const { body } = route.params;
+  const { theme } = useContext(ThemeContext);
 
   const {
     user,
@@ -41,7 +41,8 @@ const WorkDetail = ({navigation, route}: Props) => {
 
   return (
     <SafeAreaView
-      style={{...styles.container, backgroundColor: theme.backgroundColor}}>
+      style={{ ...styles.container, backgroundColor: theme.backgroundColor }}
+    >
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -50,16 +51,19 @@ const WorkDetail = ({navigation, route}: Props) => {
           />
         }
         showsVerticalScrollIndicator={false}
-        style={styles.body}>
+        style={styles.body}
+      >
         <View style={styles.containerDetails}>
           <Typography
-            style={{...styles.title, color: colors.quaternary.quaternary100}}>
+            style={{ ...styles.title, color: colors.quaternary.quaternary100 }}
+          >
             {body.title}
           </Typography>
           {existingRequest?.hasRequested && (
             <Typography
-              variant={{type: 'caption'}}
-              style={styles.existingRequest}>
+              variant={{ type: "caption" }}
+              style={styles.existingRequest}
+            >
               Solicitado
             </Typography>
           )}
@@ -69,7 +73,7 @@ const WorkDetail = ({navigation, route}: Props) => {
             <Image
               resizeMode="contain"
               style={styles.imgPerfil}
-              source={require('./../../assets/banner.png')}
+              source={require("./../../assets/banner.png")}
             />
             <Rating
               imageSize={10}
@@ -87,8 +91,9 @@ const WorkDetail = ({navigation, route}: Props) => {
               />
               <Typography
                 variant={{
-                  type: 'bodyP3',
-                }}>{`${user?.name} ${user?.lastname}`}</Typography>
+                  type: "bodyP3",
+                }}
+              >{`${user?.name} ${user?.lastname}`}</Typography>
             </View>
 
             <View style={styles.rowProfile}>
@@ -100,9 +105,10 @@ const WorkDetail = ({navigation, route}: Props) => {
               />
               <Typography
                 variant={{
-                  type: 'bodyP3',
-                }}>
-                {status === 'active'
+                  type: "bodyP3",
+                }}
+              >
+                {status === "active"
                   ? body?.location?.address
                   : hideAddress(body?.location?.address)}
               </Typography>
@@ -110,7 +116,7 @@ const WorkDetail = ({navigation, route}: Props) => {
           </View>
         </View>
 
-        <Typography style={styles.titleSection} variant={{type: 'bodyP2'}}>
+        <Typography style={styles.titleSection} variant={{ type: "bodyP2" }}>
           Informacion del empleo:
         </Typography>
 
@@ -124,8 +130,9 @@ const WorkDetail = ({navigation, route}: Props) => {
             />
             <Typography
               variant={{
-                type: 'bodyP3',
-              }}>
+                type: "bodyP3",
+              }}
+            >
               Sueldo:
             </Typography>
           </View>
@@ -133,7 +140,8 @@ const WorkDetail = ({navigation, route}: Props) => {
             style={{
               ...styles.cardInfomation,
               backgroundColor: theme.neutral50,
-            }}>
+            }}
+          >
             <Typography bold>{`S/ ${numberWithCommas(body.price)}`}</Typography>
           </View>
 
@@ -146,8 +154,9 @@ const WorkDetail = ({navigation, route}: Props) => {
             />
             <Typography
               variant={{
-                type: 'bodyP3',
-              }}>
+                type: "bodyP3",
+              }}
+            >
               Tipo de empleo:
             </Typography>
           </View>
@@ -155,12 +164,13 @@ const WorkDetail = ({navigation, route}: Props) => {
             style={{
               ...styles.cardInfomation,
               backgroundColor: theme.neutral50,
-            }}>
+            }}
+          >
             <Typography bold>{body?.typeEmployeData?.name}</Typography>
           </View>
         </View>
 
-        <Typography style={styles.titleSection} variant={{type: 'bodyP2'}}>
+        <Typography style={styles.titleSection} variant={{ type: "bodyP2" }}>
           Ubicación:
         </Typography>
         <View style={styles.rowDescription}>
@@ -172,14 +182,15 @@ const WorkDetail = ({navigation, route}: Props) => {
           />
           <Typography
             variant={{
-              type: 'bodyP3',
-            }}>
-            {status === 'active'
+              type: "bodyP3",
+            }}
+          >
+            {status === "active"
               ? body?.location?.address
               : hideAddress(body?.location?.address)}
           </Typography>
         </View>
-        <Typography style={styles.titleSection} variant={{type: 'bodyP2'}}>
+        <Typography style={styles.titleSection} variant={{ type: "bodyP2" }}>
           Contacto:
         </Typography>
         <View style={styles.rowDescription}>
@@ -192,26 +203,29 @@ const WorkDetail = ({navigation, route}: Props) => {
           <View style={styles.rowDescription}>
             <Typography
               variant={{
-                type: 'bodyP3',
-              }}>
-              {`+${user?.codeNumber ?? ''} ${
-                status === 'active'
+                type: "bodyP3",
+              }}
+            >
+              {`+${user?.codeNumber ?? ""} ${
+                status === "active"
                   ? user?.number
                   : hidePhoneNumber(user?.number)
               }`}
             </Typography>
             <TouchableOpacity
               onPress={() => {
-                if (status === 'active') {
+                if (status === "active") {
                   Linking.openURL(`tel:${user?.number}`);
                 }
-              }}>
+              }}
+            >
               <Typography
                 style={styles.colorTexx}
                 variant={{
-                  type: 'bodyP3',
-                }}>
-                {status === 'active' && ' llamar'}
+                  type: "bodyP3",
+                }}
+              >
+                {status === "active" && " llamar"}
               </Typography>
             </TouchableOpacity>
           </View>
@@ -226,11 +240,12 @@ const WorkDetail = ({navigation, route}: Props) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            if (status === 'active' && user?.email) {
+            if (status === "active" && user?.email) {
               Linking.openURL(`mailto:${user.email}`);
             }
           }}
-          style={styles.rowDescription}>
+          style={styles.rowDescription}
+        >
           <Icon
             name="mail"
             size={15}
@@ -240,34 +255,37 @@ const WorkDetail = ({navigation, route}: Props) => {
           <Typography
             style={{
               color:
-                status === 'active' ? colors.primary.primary100 : colors.black,
-              textDecorationLine: status === 'active' ? 'underline' : 'none',
+                status === "active" ? colors.primary.primary100 : colors.black,
+              textDecorationLine: status === "active" ? "underline" : "none",
             }}
             variant={{
-              type: 'bodyP3',
-            }}>
-            {`${status === 'active' ? user?.email : hideEmail(user?.email)}`}
+              type: "bodyP3",
+            }}
+          >
+            {`${status === "active" ? user?.email : hideEmail(user?.email)}`}
           </Typography>
         </TouchableOpacity>
-        <Typography style={styles.titleSection} variant={{type: 'bodyP2'}}>
+        <Typography style={styles.titleSection} variant={{ type: "bodyP2" }}>
           Descripción:
         </Typography>
         <Typography
           bold
-          variant={{type: 'h6'}}
+          variant={{ type: "h6" }}
           style={{
             ...styles.description,
             color: colors.quaternary.quaternary100,
-          }}>
+          }}
+        >
           {body.title}:
         </Typography>
         <Typography
           bold
-          variant={{type: 'bodyP2'}}
+          variant={{ type: "bodyP2" }}
           style={{
             ...styles.description,
             color: colors.quaternary.quaternary100,
-          }}>
+          }}
+        >
           {body.description}
         </Typography>
       </ScrollView>

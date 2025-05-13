@@ -1,21 +1,19 @@
-// import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import "./global.css";
-// import ToastModal from './src/components/2.Molecules/ToastModal';
-// import HomeStack from './src/pages/App';
-// import {navigationRef} from './src/utils/navigationref/RootNavigation';
+import FlashMessage from "react-native-flash-message";
+import Geocoder from "react-native-geocoding";
 import { PaperProvider } from "react-native-paper";
-// import {AuthProvider} from './src/provider/AuthProvider';
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import "./global.css";
+import HomeStack from "./src/pages/App";
+import { AuthProvider } from "./src/provider/AuthProvider";
 import { ThemeProvider, useTheme } from "./src/provider/ThemeProvider";
 import reducers from "./src/redux";
-// import Geocoder from 'react-native-geocoding';
-// import {API_KEY} from './src/services/api';
+import { API_KEY } from "./src/services/api";
+import { navigationRef } from "./src/utils/navigationref/RootNavigation";
 
-// Geocoder.init(API_KEY, { language: "es" }); // TO-REVIEW: disabled temporarily
+Geocoder.init(API_KEY, { language: "es" }); // TO-REVIEW: disabled temporarily
 const App = () => {
   const store = createStore(reducers);
   const { theme } = useTheme();
@@ -24,18 +22,12 @@ const App = () => {
     <ThemeProvider>
       <PaperProvider theme={theme}>
         <Provider store={store}>
-          {/* <NavigationContainer ref={navigationRef}> */}
-          <SafeAreaView className="items-center justify-center flex-1">
-            <Text className="text-red-700">
-              Hola wefopjnvuefhsbv huedfsbvghdvffeijvbfuybvfehuv
-              iefhvbuoyfebviuefnvbuofebvudefivbuoe ssss alfo
-            </Text>
-          </SafeAreaView>
-          {/* <AuthProvider>
+          <NavigationContainer ref={navigationRef}>
+            <AuthProvider>
               <HomeStack />
             </AuthProvider>
-            <ToastModal /> */}
-          {/* </NavigationContainer> */}
+            <FlashMessage position="top" />
+          </NavigationContainer>
         </Provider>
       </PaperProvider>
     </ThemeProvider>

@@ -1,7 +1,6 @@
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import React, {
   forwardRef,
-  JSX,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -16,7 +15,7 @@ import { CustomModalRef, ToastPosition, ToastVariant } from "./type";
 
 const ToastModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState<string | JSX.Element>("");
+  const [text, setText] = useState<string | React.ReactNode>("");
   const [variant, setVariant] = useState<ToastVariant>({ type: "info" });
   const [potision, setPosition] = useState<ToastPosition>("top");
   const [closeIcon, setCloseIcon] = useState<boolean>(true);
@@ -47,7 +46,7 @@ const ToastModal = () => {
     modalRef,
     () => ({
       show: (
-        value: string | JSX.Element,
+        value: string | React.ReactNode,
         v?: ToastVariant,
         p?: ToastPosition,
         c?: boolean

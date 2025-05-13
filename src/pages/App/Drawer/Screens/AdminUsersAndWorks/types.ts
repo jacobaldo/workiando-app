@@ -1,5 +1,5 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import {MyAppProps} from '../../../types';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { MyAppProps } from "../../../types";
 
 export interface AdminUserAndWorksProps {
   navigation: StackNavigationProp<MyAppProps>;
@@ -8,14 +8,14 @@ export interface AdminUserAndWorksProps {
 }
 export type ListItemAdmin = {
   name: string;
-  // icon: JSX.Element;
+  // icon: React.ReactNode;
   icon: string;
   type: AdminType;
   navigate: string;
   get: string;
 };
 
-export type AdminType = 'user' | 'work' | 'create';
+export type AdminType = "user" | "work" | "create";
 
 export interface Admin {
   _id: string;

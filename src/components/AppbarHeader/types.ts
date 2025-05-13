@@ -1,8 +1,8 @@
-import {ViewStyle} from 'react-native';
+import { ViewStyle } from "react-native";
 
 export interface Props {
   title?: string;
-  badge?: JSX.Element;
+  badge?: React.ReactNode;
   style?: ViewStyle;
   backButon?: boolean;
   backPress?: () => void;
@@ -27,24 +27,24 @@ export interface Props {
   filterFocus?: boolean;
   filterPlaceHolder?: string;
   onChangeFilter?: (v: string) => void;
-  leftAdornment?: JSX.Element;
-  rightAdornment?: JSX.Element;
+  leftAdornment?: React.ReactNode;
+  rightAdornment?: React.ReactNode;
   onFilterPress?: () => void;
   handleFilterTransactions?: () => void;
 }
 
 export type Variant =
-  | {type: 'default'}
-  | {type: 'white'}
-  | {type: 'black'}
-  | {type: 'blue'}
-  | {type: 'neutral'}
-  | {type: 'secondary'}
-  | {type: 'blueLight'};
+  | { type: "default" }
+  | { type: "white" }
+  | { type: "black" }
+  | { type: "blue" }
+  | { type: "neutral" }
+  | { type: "secondary" }
+  | { type: "blueLight" };
 
 export type VariantIcon =
-  | {type: 'default'}
-  | {type: 'Support'}
-  | {type: 'Expense'}
-  | {type: 'Products'}
-  | {type: 'Home'};
+  | { type: "default" }
+  | { type: "Support" }
+  | { type: "Expense" }
+  | { type: "Products" }
+  | { type: "Home" };

@@ -1,4 +1,4 @@
-import {FormEvent} from 'react';
+import { FormEvent } from "react";
 
 export interface Props {
   btnText?: string;
@@ -8,12 +8,12 @@ export interface Props {
   onPress?: (e?: FormEvent<HTMLFormElement> | undefined) => void;
   disabled?: boolean;
   loading?: boolean;
-  iconLeft?: JSX.Element;
+  iconLeft?: React.ReactNode;
 }
 
 export type buttonType =
-  | 'primary'
-  | 'primaryGreen'
-  | 'secondary'
-  | 'tertiary'
-  | 'default';
+  | "primary"
+  | "primaryGreen"
+  | "secondary"
+  | "tertiary"
+  | "default";

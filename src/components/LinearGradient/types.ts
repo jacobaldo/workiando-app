@@ -1,3 +1,3 @@
 export interface LinearProps {
-  children: JSX.Element;
+  children: React.ReactNode;
 }

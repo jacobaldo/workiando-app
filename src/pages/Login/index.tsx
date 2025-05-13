@@ -1,9 +1,9 @@
 import React, { useContext, useRef } from "react";
-import { Image, SafeAreaView, View } from "react-native";
+import { Image, View } from "react-native";
 import { Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import { InputField } from "../../components/InputField";
-import Gradient from "../../components/LinearGradient";
 import { useUser } from "../../provider/AuthProvider";
 import { ThemeContext } from "../../provider/ThemeProvider";
 import useLogin from "./hooks";
@@ -42,72 +42,71 @@ const Login = ({ navigation }: any) => {
     login,
   });
   return (
-    <Gradient>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.body}>
-          <Image
-            source={require("../../assets/banner.png")}
-            style={styles.imageType}
-          />
-          {/* <Typography bold style={styles.textSesion} variant={{type: 'h4'}}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.body}>
+        <Image
+          source={require("../../assets/banner.png")}
+          style={styles.imageType}
+        />
+        {/* <Typography bold style={styles.textSesion} variant={{type: 'h4'}}>
             Inicia Sesión
           </Typography> */}
 
-          <View style={styles.containerImputFiel}>
-            <InputField
-              lastField
-              currentRef={passwordRef}
-              label={"Usuario"}
-              value={email}
-              // firstField={true}
-              // isPassword={false}
-              onChange={(e) => {
-                setEmail(e);
-              }}
-              // success={true}
-              // touched={true}
-              isError={email.length > 0 && !isEmailValid()}
-              errorValue={
-                isEmailValid()
-                  ? "Ingresa tu correo electronico"
-                  : "Correo incorrecto"
-              }
-              keyboardType="email-address"
-            />
-          </View>
-          <View style={styles.containerImputFiel}>
-            <InputField
-              lastField
-              currentRef={passwordRef}
-              label={"Contraseña"}
-              value={password}
-              firstField={true}
-              isPassword={true}
-              onChange={(e) => {
-                setPassword(e);
-              }}
-              success={true}
-              touched={true}
-              isError={false}
-              errorValue={"Ingresa contraseña"}
-            />
-          </View>
-          <Button
-            type="primary"
-            btnText="Iniciar Sesión"
-            onPress={handleSignIn}
-            disabled={!isEmailValid() || !(password.length > 0)}
-            loading={loading}
+        <View style={styles.containerImputFiel}>
+          <InputField
+            lastField
+            currentRef={passwordRef}
+            label={"Usuario"}
+            value={email}
+            // firstField={true}
+            // isPassword={false}
+            onChange={(e) => {
+              setEmail(e);
+            }}
+            // success={true}
+            // touched={true}
+            isError={email.length > 0 && !isEmailValid()}
+            errorValue={
+              isEmailValid()
+                ? "Ingresa tu correo electronico"
+                : "Correo incorrecto"
+            }
+            keyboardType="email-address"
           />
-          <View style={styles.registerContent}>
-            <Button
-              type="secondary"
-              btnText="Crear cuenta nueva"
-              onPress={navigateRegister}
-            />
-          </View>
+        </View>
+        <View style={styles.containerImputFiel}>
+          <InputField
+            lastField
+            currentRef={passwordRef}
+            label={"Contraseña"}
+            value={password}
+            firstField={true}
+            isPassword={true}
+            onChange={(e) => {
+              setPassword(e);
+            }}
+            success={true}
+            touched={true}
+            isError={false}
+            errorValue={"Ingresa contraseña"}
+          />
+        </View>
+        <Button
+          type="primary"
+          btnText="Iniciar Sesión"
+          onPress={handleSignIn}
+          disabled={!isEmailValid() || !(password.length > 0)}
+          loading={loading}
+        />
+        <View style={styles.registerContent}>
+          <Button
+            type="secondary"
+            btnText="Crear cuenta nueva"
+            onPress={navigateRegister}
+          />
+        </View>
 
-          {/* <Text theme={theme} variant="labelMedium">
+        {/* <Text theme={theme} variant="labelMedium">
             Verificar por:
           </Text>
           <View style={styles.optionNumber}>
@@ -191,8 +190,8 @@ const Login = ({ navigation }: any) => {
             loading={loading}
           /> */}
 
-          <View style={styles.registerContent}>
-            {/* <Button
+        <View style={styles.registerContent}>
+          {/* <Button
               type="primary"
               btnText="Facebook"
               onPress={loginWithFacebook}
@@ -204,27 +203,26 @@ const Login = ({ navigation }: any) => {
                 />
               }
             /> */}
-            <Text theme={theme} style={styles.textSesion} variant="labelMedium">
-              o Inicia Sesión con:
-            </Text>
+          <Text theme={theme} style={styles.textSesion} variant="labelMedium">
+            o Inicia Sesión con:
+          </Text>
 
-            <Button
-              type="primary"
-              btnText="Google"
-              onPress={loginWithGoogle}
-              style={styles.google}
-              textStyle={styles.googleText}
-              iconLeft={
-                <Image
-                  style={styles.iconLogin}
-                  source={require("../../assets/login/google.png")}
-                />
-              }
-            />
-          </View>
+          <Button
+            type="primary"
+            btnText="Google"
+            onPress={loginWithGoogle}
+            style={styles.google}
+            textStyle={styles.googleText}
+            iconLeft={
+              <Image
+                style={styles.iconLogin}
+                source={require("../../assets/login/google.png")}
+              />
+            }
+          />
         </View>
-      </SafeAreaView>
-    </Gradient>
+      </View>
+    </SafeAreaView>
   );
 };
 

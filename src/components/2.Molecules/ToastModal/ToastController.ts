@@ -1,5 +1,5 @@
-import {MutableRefObject} from 'react';
-import {CustomModalRef, ToastPosition, ToastVariant} from './type';
+import { MutableRefObject } from "react";
+import { CustomModalRef, ToastPosition, ToastVariant } from "./type";
 
 export default class ToastController {
   static modalRef: MutableRefObject<CustomModalRef>;
@@ -8,10 +8,10 @@ export default class ToastController {
   };
 
   static showModal = (
-    text: string | JSX.Element,
+    text: string | React.ReactNode,
     variant?: ToastVariant,
     position?: ToastPosition,
-    closeIcon?: boolean,
+    closeIcon?: boolean
   ) => {
     this.modalRef.current?.show(text, variant, position, closeIcon);
   };
