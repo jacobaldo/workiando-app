@@ -1,4 +1,4 @@
-package com.jacob_aldo.workiandoapp
+package expo-auth-session
 
 import android.app.Application
 import android.content.res.Configuration

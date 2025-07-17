@@ -41,3 +41,4 @@ includeBuild(expoAutolinking.reactNativeGradlePlugin)
 // include ':react-native-onesignal'
 // project(':react-native-onesignal').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-onesignal/android')
 
+

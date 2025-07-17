@@ -1,4 +1,4 @@
-package com.jacob_aldo.workiandoapp
+package expo-auth-session
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

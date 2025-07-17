@@ -1,6 +1,9 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
   <uses-permission android:name="android.permission.VIBRATE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -27,9 +30,5 @@
         <data android:scheme="workiandoapp"/>
       </intent-filter>
     </activity>
-    <!-- onesignal -->
-    <!-- <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
-    <meta-data android:name="onesignal_app_id" android:value="1d000840-2cc5-4d8e-8c19-1d76f9ba9b4d" />
-    <meta-data android:name="onesignal_in_focus_displaying" android:value="None" /> -->
   </application>
 </manifest>
