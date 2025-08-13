@@ -89,13 +89,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'expo-auth-session'
+    namespace 'com.chambea_pe_app'
     defaultConfig {
-        applicationId 'expo-auth-session'
+        applicationId 'com.chambea_pe_app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 13
+        versionName "1.13.0"
     }
     signingConfigs {
         debug {
@@ -104,26 +104,26 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-          release {
-            storeFile file('workiando.keystore')
-            storePassword 'workiando_key'
-            keyAlias 'workiando' 
+         release {
+            storeFile file('workiando-key.keystore')
+            storePassword 'workiando'
+            keyAlias 'workiando_key_alias'
             keyPassword 'workiando'
         }
+
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
-        release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+       release {
+            signingConfig signingConfigs.release // antes estaba signingConfigs.debug
             shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             crunchPngs (findProperty('android.enablePngCrunchInReleaseBuilds')?.toBoolean() ?: true)
-        }
+        }       
+
          
     }
     packagingOptions {

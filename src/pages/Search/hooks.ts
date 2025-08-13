@@ -22,13 +22,13 @@ import {
   getPosition,
   locationPermissions,
 } from "../../utils/geolocation";
-import { useSubscribeNotification } from "../../utils/notification/notification.utils";
+// import { useSubscribeNotification } from "../../utils/notification/notification.utils";
 import { AllCategories, Subscription, Work } from "./types";
 
 const useSearch = ({ navigation }: any) => {
   const dispatch = useDispatch();
   const { requestLocationPermission } = useCurrentLocation();
-  const { subscribe } = useSubscribeNotification();
+  // const { subscribe } = useSubscribeNotification();
   const {
     authState: { user },
   } = useUser();
@@ -108,7 +108,7 @@ const useSearch = ({ navigation }: any) => {
   };
   useEffect(() => {
     getUbications();
-    subscribe();
+    // subscribe();
     getDataSubscription();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

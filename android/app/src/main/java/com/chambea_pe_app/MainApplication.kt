@@ -1,4 +1,4 @@
-package expo-auth-session
+package com.chambea_pe_app
 
 import android.app.Application
 import android.content.res.Configuration

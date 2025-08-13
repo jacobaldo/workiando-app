@@ -1,4 +1,3 @@
-import { DrawerScreenProps } from "@react-navigation/drawer";
 import React from "react";
 import {
   ActivityIndicator,
@@ -11,8 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import Icon2 from "react-native-vector-icons/Ionicons";
 import CardWork from "../../components/2.Molecules/CardWork";
 import { Typography } from "../../components/Typography";
 import { colors } from "../../constants/colors";
@@ -22,18 +19,21 @@ import useSearch from "./hooks";
 import { OptionBottomSheet } from "./OptionsBottomSheet";
 import { styles } from "./styles";
 
+import Feather from "@expo/vector-icons/Feather";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
 import { FAB, Text } from "react-native-paper";
 import { useTheme } from "../../provider/ThemeProvider";
-import { MyAppProps } from "../App/types";
 import { Work } from "./types";
 // import {spacings} from '../../constants/spacings';
 // import CaroucelCompounet from '../../components/2.Molecules/Caroucel';
 // import Logo from './../../assets/svg/aa.svg';
 
-interface Props extends DrawerScreenProps<MyAppProps, "Search"> {}
-const Search = ({ navigation }: Props) => {
+// interface Props extends DrawerScreenProps<MyAppProps, "Search"> {}
+const Search = () => {
   const { theme } = useTheme();
+  const navigation = useNavigation();
   const {
     setSearchText,
     searchText,
@@ -80,7 +80,7 @@ const Search = ({ navigation }: Props) => {
                   backgroundColor: theme.neutral100,
                 }}
               >
-                <Icon2 name="search" size={20} color={theme.textColor} />
+                <Feather name="search" size={20} color={theme.textColor} />
                 <TextInput
                   style={{
                     ...styles.input,
@@ -99,7 +99,7 @@ const Search = ({ navigation }: Props) => {
                 onPress={() => setOpenBtnFilterSheet(true)}
                 style={styles.filterContainer}
               >
-                <Icon name="sliders" size={24} color={colors.white} />
+                <FontAwesome name="sliders" size={24} color={colors.white} />
               </TouchableOpacity>
             </View>
             <ScrollView

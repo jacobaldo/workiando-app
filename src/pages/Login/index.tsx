@@ -42,7 +42,9 @@ const Login = ({ navigation }: any) => {
     login,
   });
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={{ ...styles.container, backgroundColor: theme.backgroundColor }}
+    >
       <View style={styles.body}>
         <Image
           source={require("../../assets/banner.png")}

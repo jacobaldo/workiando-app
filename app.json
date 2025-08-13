@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "workiando-app",
+    "name": "Workiando",
     "slug": "workiando-app",
-    "version": "1.0.0",
+    "version": "1.13.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "workiandoapp",
@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo-auth-session"
+      "bundleIdentifier": "org.chambea-pe-app"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +18,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "expo-auth-session"
+      "package": "com.chambea_pe_app",
+      "versionCode": 13
     },
     "web": {
       "bundler": "metro",
@@ -43,8 +44,13 @@
     "extra": {
       "router": {},
       "eas": {
+        "package": "com.chambea_pe_app",
+        "googleServicesFile": "./google-services.json",
         "projectId": "32c2915e-7746-4d2a-a678-86fce179b4d3"
-      }
+      },
+      "GOOGLE_CLIENT_ID": "530045422051-khud9e4229klglgfec75lr0gu8e8miho.apps.googleusercontent.com",
+      "expoClientId": "530045422051-7n6pnfuoio5ral1hd6r6uugpu9lq0cjv.apps.googleusercontent.com",
+      "androidClientId": "530045422051-khud9e4229klglgfec75lr0gu8e8miho.apps.googleusercontent.com"
     }
   }
 }

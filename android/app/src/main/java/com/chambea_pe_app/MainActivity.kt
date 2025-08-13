@@ -1,4 +1,4 @@
-package expo-auth-session
+package com.chambea_pe_app
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build
