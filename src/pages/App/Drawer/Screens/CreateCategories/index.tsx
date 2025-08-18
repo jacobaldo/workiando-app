@@ -1,4 +1,5 @@
-import React, {useContext} from 'react';
+import { StackScreenProps } from "@react-navigation/stack";
+import React, { useContext } from "react";
 import {
   Image,
   RefreshControl,
@@ -6,25 +7,24 @@ import {
   ScrollView,
   Switch,
   View,
-} from 'react-native';
-import {styles} from './styles';
-import {StackScreenProps} from '@react-navigation/stack';
-import {useCreateCategories} from './hooks';
-import {Typography} from '../../../../../components/Typography';
-import {MyAppProps} from '../../../types';
-import {Category} from '../../../../ConfigureEmploye/types';
-import {InputField} from '../../../../../components/InputField';
-import {Button} from '../../../../../components/Button';
-import EditItem from './EditItem';
+} from "react-native";
+import { Button } from "../../../../../components/Button";
+import { InputField } from "../../../../../components/InputField";
+import { Typography } from "../../../../../components/Typography";
+import { Category } from "../../../../ConfigureEmploye/types";
+import { MyAppProps } from "../../../types";
+import EditItem from "./EditItem";
+import { useCreateCategories } from "./hooks";
+import { styles } from "./styles";
 // import Gradient from '../../../../../components/LinearGradient';
-import {EditSheet} from './EditSheet';
-import {RadioButton, Text} from 'react-native-paper';
-import {ThemeContext} from '../../../../../provider/ThemeProvider';
-import {spacings} from '../../../../../constants/spacings';
-interface Props extends StackScreenProps<MyAppProps, 'CreateCategories'> {}
-const CreateCategories = ({navigation, route}: Props) => {
-  const {type} = route.params;
-  const {theme} = useContext(ThemeContext);
+import { RadioButton, Text } from "react-native-paper";
+import { spacings } from "../../../../../constants/spacings";
+import { ThemeContext } from "../../../../../provider/ThemeProvider";
+import { EditSheet } from "./EditSheet";
+interface Props extends StackScreenProps<MyAppProps, "CreateCategories"> {}
+const CreateCategories = ({ navigation, route }: Props) => {
+  const { type } = route.params;
+  const { theme } = useContext(ThemeContext);
   const {
     loading,
     loadingEmploye,
@@ -52,11 +52,11 @@ const CreateCategories = ({navigation, route}: Props) => {
 
   const loadingAll = () => {
     switch (type) {
-      case 'category':
+      case "category":
         return loading;
-      case 'typeEmploye':
+      case "typeEmploye":
         return loadingEmploye;
-      case 'membership':
+      case "membership":
         return loadingMembership;
       default:
         return false;
@@ -65,7 +65,8 @@ const CreateCategories = ({navigation, route}: Props) => {
 
   return (
     <SafeAreaView
-      style={{...styles.container, backgroundColor: theme.backgroundColor}}>
+      style={{ ...styles.container, backgroundColor: theme.backgroundColor }}
+    >
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -74,28 +75,29 @@ const CreateCategories = ({navigation, route}: Props) => {
           />
         }
         showsVerticalScrollIndicator={false}
-        style={styles.body}>
+        style={styles.body}
+      >
         <View style={styles.register}>
           <InputField
             lastField
             label={`Ingrese ${typeText()}`}
             value={formik.values.name}
-            onChange={formik.handleChange('name')}
+            onChange={formik.handleChange("name")}
             isError={!!formik.errors.name}
             errorValue={formik.errors.name}
-            labelStyle={{color: theme.neutral700}}
+            labelStyle={{ color: theme.neutral700 }}
           />
-          {type === 'category' && (
+          {type === "category" && (
             <View style={styles.containerImage}>
               {imageUri && (
                 <Image
-                  source={{uri: imageUri}}
+                  source={{ uri: imageUri }}
                   style={styles.image}
                   resizeMode="cover"
                 />
               )}
               <Button
-                style={{width: 170}}
+                style={{ width: 170 }}
                 type="primary"
                 btnText={`Elegir Imagen`}
                 // style={styles.styleButton}
@@ -104,41 +106,43 @@ const CreateCategories = ({navigation, route}: Props) => {
               />
             </View>
           )}
-          {type === 'membership' && (
+          {type === "membership" && (
             <>
               <InputField
                 lastField
                 label={`precio de Membresia`}
                 keyboardType="numeric"
                 value={formik.values.price?.toString()}
-                onChange={formik.handleChange('price')}
+                onChange={formik.handleChange("price")}
                 isError={!!formik.errors.price}
                 errorValue={formik.errors.price}
-                labelStyle={{color: theme.neutral700}}
+                labelStyle={{ color: theme.neutral700 }}
               />
               <InputField
                 lastField
                 label={`Cant. dias de membresia`}
                 keyboardType="numeric"
                 value={formik.values.duration?.toString()}
-                onChange={formik.handleChange('duration')}
+                onChange={formik.handleChange("duration")}
                 isError={!!formik.errors.duration}
                 errorValue={formik.errors.duration}
-                labelStyle={{color: theme.neutral700}}
+                labelStyle={{ color: theme.neutral700 }}
               />
               <RadioButton.Group
-                onValueChange={newValue => setTypeMembership(newValue)}
-                value={typeMembership}>
+                onValueChange={(newValue) => setTypeMembership(newValue)}
+                value={typeMembership}
+              >
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    alignItems: "center",
                     marginTop: spacings.s2,
-                  }}>
+                  }}
+                >
                   <RadioButton theme={theme} value="work" />
                   <Text theme={theme}>Para Anuncios</Text>
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <RadioButton theme={theme} value="user" />
                   <Text theme={theme}>Para Usiarios</Text>
                 </View>
@@ -146,14 +150,15 @@ const CreateCategories = ({navigation, route}: Props) => {
             </>
           )}
 
-          {type === 'typeEmploye' && (
+          {type === "typeEmploye" && (
             <View style={styles.amount}>
               <Typography
-                variant={{type: 'bodyP3'}}>{`Pago calculable`}</Typography>
+                variant={{ type: "bodyP3" }}
+              >{`Pago calculable`}</Typography>
               <Switch
-                trackColor={{false: '#767577', true: '#81b0ff'}}
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
                 thumbColor={
-                  formik.values.calculableAmount ? '#f5dd4b' : '#f4f3f4'
+                  formik.values.calculableAmount ? "#f5dd4b" : "#f4f3f4"
                 }
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
@@ -165,8 +170,6 @@ const CreateCategories = ({navigation, route}: Props) => {
             <Button
               type="primary"
               btnText={`Registrar ${typeText()} `}
-              // style={styles.styleButton}
-              // textStyle={styles.text1}
               loading={loadingPost}
               onPress={formik.handleSubmit}
               disabled={!formik.isValid}
@@ -174,26 +177,28 @@ const CreateCategories = ({navigation, route}: Props) => {
           </View>
           <Typography>{`Lista de ${typeText()}:`}</Typography>
         </View>
-        {type === 'membership' && (
+        {type === "membership" && (
           <View style={styles.tabmebership}>
             <View
               style={{
                 ...styles.texttab,
 
                 backgroundColor:
-                  selectTab === 'work' ? theme.colors.primary : theme.neutral50,
-              }}>
+                  selectTab === "work" ? theme.colors.primary : theme.neutral50,
+              }}
+            >
               <Text
                 style={{
                   color:
-                    selectTab === 'work'
+                    selectTab === "work"
                       ? theme.colors.onPrimary
                       : theme.colors.primary,
                 }}
                 onPress={() => {
-                  setSelectTab('work');
+                  setSelectTab("work");
                 }}
-                theme={theme}>
+                theme={theme}
+              >
                 Anuncios
               </Text>
             </View>
@@ -202,18 +207,20 @@ const CreateCategories = ({navigation, route}: Props) => {
                 ...styles.texttab,
 
                 backgroundColor:
-                  selectTab === 'user' ? theme.colors.primary : theme.neutral50,
-              }}>
+                  selectTab === "user" ? theme.colors.primary : theme.neutral50,
+              }}
+            >
               <Text
                 style={{
                   color:
-                    selectTab === 'user'
+                    selectTab === "user"
                       ? theme.colors.onPrimary
                       : theme.colors.primary,
                 }}
                 onPress={() => {
-                  setSelectTab('user');
-                }}>
+                  setSelectTab("user");
+                }}
+              >
                 Usuarios
               </Text>
             </View>

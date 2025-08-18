@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import FlashMessage from "react-native-flash-message";
 import Geocoder from "react-native-geocoding";
 import { PaperProvider } from "react-native-paper";
@@ -13,10 +13,14 @@ import { ThemeProvider, useTheme } from "./src/provider/ThemeProvider";
 import reducers from "./src/redux";
 import { API_KEY } from "./src/services/api";
 import { navigationRef } from "./src/utils/navigationref/RootNavigation";
+import { initOneSignal } from "./src/utils/notification/notification.utils";
 
 Geocoder.init(API_KEY, { language: "es" });
 const App = () => {
   const store = createStore(reducers);
+  useEffect(() => {
+    initOneSignal();
+  }, []);
   const { theme } = useTheme();
 
   return (

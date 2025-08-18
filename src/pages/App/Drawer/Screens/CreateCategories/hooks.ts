@@ -50,7 +50,7 @@ export const useCreateCategories = ({ type }: CreateCategoriesProps) => {
 
   const bodySetEmployesSchema = Yup.object().shape({
     name: Yup.string().required("Ingresa nombre"),
-    photo: Yup.string().required("Ingresa foto"),
+    photo: Yup.string(),
   });
 
   const bodySetEmployesSchemaM = Yup.object().shape({

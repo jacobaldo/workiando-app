@@ -1,19 +1,19 @@
-import React from 'react';
-import {useTheme} from '../../provider/ThemeProvider';
-import {MyAppProps} from '../App/types';
-import {StackScreenProps} from '@react-navigation/stack';
-import useConfirmPayEmployes from './hooks';
-import {Image, ScrollView, View} from 'react-native';
-import {Button, Card, Checkbox, RadioButton, Text} from 'react-native-paper';
-import Gradient from '../../components/LinearGradient';
-import {numberWithCommas} from '../../utils/currency/currency.utils';
-import {spacings} from '../../constants/spacings';
-import CardWorkConfirm from '../../components/2.Molecules/CardWorkConfirm';
+import { StackScreenProps } from "@react-navigation/stack";
+import React from "react";
+import { Image, ScrollView, View } from "react-native";
+import { Button, Card, Checkbox, RadioButton, Text } from "react-native-paper";
+import CardWorkConfirm from "../../components/2.Molecules/CardWorkConfirm";
+import Gradient from "../../components/LinearGradient";
+import { spacings } from "../../constants/spacings";
+import { useTheme } from "../../provider/ThemeProvider";
+import { numberWithCommas } from "../../utils/currency/currency.utils";
+import { MyAppProps } from "../App/types";
+import useConfirmPayEmployes from "./hooks";
 
-interface Props extends StackScreenProps<MyAppProps, 'ConfirmPayEmploye'> {}
-const ConfirmPayEmploye = ({navigation, route}: Props) => {
-  const {data, admin} = route.params;
-  const {theme} = useTheme();
+interface Props extends StackScreenProps<MyAppProps, "ConfirmPayEmploye"> {}
+const ConfirmPayEmploye = ({ navigation, route }: Props) => {
+  const { data, admin } = route.params;
+  const { theme } = useTheme();
   const {
     payMetod,
     setPayMetod,
@@ -30,44 +30,46 @@ const ConfirmPayEmploye = ({navigation, route}: Props) => {
 
   return (
     <Gradient>
-      <View style={{flex: 1}}>
-        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           <CardWorkConfirm onPress={() => null} item={data} />
-          <Card theme={theme} elevation={5} style={{margin: spacings.s2}}>
+          <Card theme={theme} elevation={5} style={{ margin: spacings.s2 }}>
             <Card.Content
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <View>
                 <Text
-                  style={{fontWeight: 'bold'}}
+                  style={{ fontWeight: "bold" }}
                   variant="titleLarge"
-                  theme={theme}>
+                  theme={theme}
+                >
                   {data.name}
                 </Text>
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'baseline',
-                  }}>
+                    flexDirection: "row",
+                    alignItems: "baseline",
+                  }}
+                >
                   <Text
                     variant="titleLarge"
-                    style={{fontWeight: 'bold'}}
-                    theme={theme}>{`S/. ${numberWithCommas(
-                    data?.membership?.price,
-                  )}`}</Text>
+                    style={{ fontWeight: "bold" }}
+                    theme={theme}
+                  >{`S/. ${numberWithCommas(data?.membership?.price)}`}</Text>
                   <Text
                     variant="titleSmall"
-                    theme={
-                      theme
-                    }>{` /${data?.membership?.duration} dias`}</Text>
+                    theme={theme}
+                  >{` /${data?.membership?.duration} dias`}</Text>
                 </View>
                 <Text
-                  style={{fontWeight: 'bold'}}
+                  style={{ fontWeight: "bold" }}
                   variant="labelSmall"
-                  theme={theme}>
+                  theme={theme}
+                >
                   {`Tu anuncio estara visible por ${data?.membership?.duration} dias para todos.`}
                 </Text>
               </View>
@@ -75,14 +77,16 @@ const ConfirmPayEmploye = ({navigation, route}: Props) => {
             </Card.Content>
           </Card>
           <View
-            style={{marginHorizontal: spacings.s2, marginBottom: spacings.s2}}>
+            style={{ marginHorizontal: spacings.s2, marginBottom: spacings.s2 }}
+          >
             <RadioButton.Group
-              onValueChange={newValue => setPayMetod(newValue)}
-              value={payMetod}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              onValueChange={(newValue) => setPayMetod(newValue)}
+              value={payMetod}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <RadioButton theme={theme} value="yape" />
                 <Image
-                  source={require('../../assets/yape.png')}
+                  source={require("../../assets/yape.png")}
                   style={{
                     width: 30,
                     height: 30,
@@ -90,13 +94,13 @@ const ConfirmPayEmploye = ({navigation, route}: Props) => {
                   }}
                 />
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <RadioButton disabled theme={theme} value="efectivo" />
                 <Text theme={theme} variant="titleSmall">
                   Efectivo
                 </Text>
               </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <RadioButton disabled theme={theme} value="izipay" />
                 <Text theme={theme} variant="titleSmall">
                   Izipay
@@ -105,15 +109,16 @@ const ConfirmPayEmploye = ({navigation, route}: Props) => {
             </RadioButton.Group>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: "row",
+                alignItems: "center",
                 paddingVertical: spacings.s2,
-              }}>
+              }}
+            >
               <Checkbox
                 // color="#6200ee"
                 // uncheckedColor="#888888"
                 theme={theme}
-                status={termCondition ? 'checked' : 'unchecked'}
+                status={termCondition ? "checked" : "unchecked"}
                 onPress={() => {
                   setTermCondition(!termCondition);
                 }}
@@ -122,7 +127,8 @@ const ConfirmPayEmploye = ({navigation, route}: Props) => {
                 theme={theme}
                 onPress={navigateTerm}
                 variant="labelSmall"
-                style={{textDecorationLine: 'underline'}}>
+                style={{ textDecorationLine: "underline" }}
+              >
                 Acepto los terminos y condiciones
               </Text>
             </View>
@@ -136,13 +142,14 @@ const ConfirmPayEmploye = ({navigation, route}: Props) => {
             </Card>
           </View>
         </ScrollView>
-        <View style={{margin: spacings.s2}}>
+        <View style={{ margin: spacings.s2 }}>
           <Button
             theme={theme}
             disabled={!termCondition}
             loading={loading}
             mode="contained"
-            onPress={navigateModal}>
+            onPress={navigateModal}
+          >
             Publicar
           </Button>
         </View>

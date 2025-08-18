@@ -59,7 +59,9 @@ const Search = () => {
   // const debouncedHandleInput = debounce(handleInput, 2000);
 
   return (
-    <SafeAreaView style={styles.body}>
+    <SafeAreaView
+      style={{ ...styles.body, backgroundColor: theme.backgroundColor }}
+    >
       <View style={styles.bodyView}>
         <ScrollView
           refreshControl={

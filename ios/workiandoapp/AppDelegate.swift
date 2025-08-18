@@ -1,6 +1,7 @@
 import Expo
 import React
 import ReactAppDependencyProvider
+import OneSignalFramework
 
 @UIApplicationMain
 public class AppDelegate: ExpoAppDelegate {
@@ -13,6 +14,8 @@ public class AppDelegate: ExpoAppDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
+    ("1d000840-2cc5-4d8e-8c19-1d76f9ba9b4d", withLaunchOptions: launchOptions)
+    
     let delegate = ReactNativeDelegate()
     let factory = ExpoReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()

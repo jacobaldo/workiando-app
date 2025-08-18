@@ -55,6 +55,7 @@ const useConfirmPayEmployes = ({
         longitude: data?.longitude,
         address: data?.formatted_address,
       },
+      quantity: data.quantity,
     };
 
     if (loading) {

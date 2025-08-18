@@ -1,20 +1,20 @@
-import React, {useContext} from 'react';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import DrawerContent from './Content/DrawerContent';
-import HeaderDrawer from './Header/HeaderDrawer';
-import {colors} from '../../../constants/colors';
-import {HomeTabNavigator} from '../HomeTabNavigator';
-import {ThemeContext} from '../../../provider/ThemeProvider';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import React, { useContext } from "react";
+import { colors } from "../../../constants/colors";
+import { ThemeContext } from "../../../provider/ThemeProvider";
+import { HomeTabNavigator } from "../HomeTabNavigator";
+import DrawerContent from "./Content/DrawerContent";
+import HeaderDrawer from "./Header/HeaderDrawer";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <Drawer.Navigator
-      drawerContent={pr => <DrawerContent {...pr} />}
+      drawerContent={(pr) => <DrawerContent {...pr} />}
       screenOptions={{
-        headerTitleAlign: 'center',
+        headerTitleAlign: "center",
         headerTitle: HeaderDrawer,
         headerTintColor: theme.textColor,
         // headerRight: MenuDrawer,
@@ -23,11 +23,12 @@ const DrawerNavigation = () => {
         },
         drawerLabelStyle: {
           marginLeft: 0,
-          fontWeight: 'bold',
+          fontWeight: "bold",
           color: theme.backgroundColor,
         },
         drawerActiveBackgroundColor: colors.primary.primary100,
-      }}>
+      }}
+    >
       <Drawer.Screen name="HomeApp" component={HomeTabNavigator} />
     </Drawer.Navigator>
   );

@@ -1,17 +1,18 @@
-import React from 'react';
-import {Image} from 'react-native';
-import {styles} from './styles';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React from "react";
+import { Image } from "react-native";
+import { styles } from "./styles";
 
 const HeaderDrawer = () => {
   return (
-    <SafeAreaView style={styles.headerContainer}>
-      <Image
-        resizeMode="contain"
-        source={require('../../../../assets/banner.png')}
-        style={styles.headerImage}
-      />
-    </SafeAreaView>
+    // <SafeAreaView style={styles.headerContainer}>
+    <Image
+      resizeMode="contain"
+      source={require("../../../../assets/banner.png")}
+      width={130}
+      height={40}
+      style={styles.headerImage}
+    />
+    // </SafeAreaView>
   );
 };
 
