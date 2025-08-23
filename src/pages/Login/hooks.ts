@@ -1,10 +1,7 @@
-import axios from "axios";
-import * as Google from "expo-auth-session/providers/google";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useEffect, useRef, useState } from "react";
 import { showMessage } from "react-native-flash-message";
 import useAxiosPost from "../../services/apiPost";
-// import { config } from "@/src/utils/googleConfig";
-import { config } from "../../utils/googleConfig";
 
 const useLogin = ({ navigation, login }: any) => {
   const { postData } = useAxiosPost();
@@ -17,57 +14,41 @@ const useLogin = ({ navigation, login }: any) => {
   const [phoneNumber, setPhoneNumber] = useState<string>();
 
   const [methodId, setMethodId] = useState<string>("sms");
-  const [request, response, promptAsync] = Google.useAuthRequest(config);
+
+  // 🔹 Configura Google al iniciar
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "530045422051-7n6pnfuoio5ral1hd6r6uugpu9lq0cjv.apps.googleusercontent.com",
+      iosClientId:
+        "530045422051-4t68b87fvipor74fr4hep1fljtn03j9l.apps.googleusercontent.com",
+
+      offlineAccess: true,
+      scopes: ["profile", "email"],
+      forceCodeForRefreshToken: true,
+      profileImageSize: 120,
+    });
+  }, []);
+
   const isEmailValid = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  useEffect(() => {
-    if (response?.type === "success") {
-      fetchUserInfo(response.authentication?.accessToken);
-    }
-  }, [response]);
-  const getGoogleUserInfo = async (token: string) => {
+
+  // 🔹 LOGIN CON GOOGLE
+  const loginWithGoogle = async () => {
     try {
-      const response = await axios.get(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      setLoading(true);
 
-      const { email, given_name, family_name, picture } = response.data;
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
 
-      return { email, given_name, family_name, picture };
-    } catch (error) {
-      console.error("Error fetching Google user info:", error);
-      return null;
-    }
-  };
-
-  const fetchUserInfo = async (token?: string) => {
-    if (!token) return;
-    // setIsLoading(true);
-    try {
-      const userInfo = await getGoogleUserInfo(token);
-      if (!userInfo) return;
-
-      const { email, given_name, family_name, picture } = userInfo;
-      // console.log("infoo", userInfo);
-      // const aa = {
-      //   email: "aldochd13@gmail.com",
-      //   family_name: "Chipana Delgado",
-      //   given_name: "Jacob Aldo",
-      //   picture:
-      //     "https://lh3.googleusercontent.com/a/ACg8ocJpVCx405TQun7Ew236BY8vESmpDsjIjCsNM6mqD8YYs17PMr4=s96-c",
-      // };
-
+      const user = userInfo?.data?.user;
       postData<any>("/auth/signup", {
-        // id: data.user.id,
-        email: email,
-        name: given_name,
-        lastname: family_name,
-        photo: picture,
+        email: user?.email,
+        name: user?.givenName,
+        lastname: user?.familyName,
+        photo: user?.photo,
         source: "GOOGLE",
       })
         .then((resp) => {
@@ -83,19 +64,21 @@ const useLogin = ({ navigation, login }: any) => {
             type: "danger",
             icon: "danger",
           });
-
           setLoading(false);
         });
-    } catch (error) {
+    } catch (error: any) {
+      console.log("Google SignIn Error:", error);
       showMessage({
         message: "Error",
-        description: "Error in google",
+        description: error?.message ?? "Error en Google Sign-In",
         type: "danger",
         icon: "danger",
       });
+      setLoading(false);
     }
   };
 
+  // 🔹 LOGIN NORMAL
   const handleSignIn = () => {
     setLoading(true);
     if (isEmailValid() && password.length > 0) {
@@ -124,15 +107,10 @@ const useLogin = ({ navigation, login }: any) => {
         });
     }
   };
+
   const navigateRegister = () => {
     navigation.navigate("Register");
   };
-
-  const loginWithFacebook = async () => {
-    // navigation.navigate('Register');
-  };
-
-  const SignInWithNumber = () => {};
 
   return {
     handleSignIn,
@@ -143,14 +121,12 @@ const useLogin = ({ navigation, login }: any) => {
     loading,
     isEmailValid,
     navigateRegister,
-    promptAsync,
-    loginWithFacebook,
+    loginWithGoogle, // 👈 ahora usas esto
     numberRef,
     phoneNumber,
     setPhoneNumber,
     methodId,
     setMethodId,
-    SignInWithNumber,
   };
 };
 

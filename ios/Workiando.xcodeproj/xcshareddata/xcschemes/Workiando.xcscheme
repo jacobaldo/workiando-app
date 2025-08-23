@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "Workiando.app"
-               BlueprintName = "workiandoapp"
-               ReferencedContainer = "container:workiandoapp.xcodeproj">
+               BlueprintName = "Workiando"
+               ReferencedContainer = "container:Workiando.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "workiandoappTests.xctest"
-               BlueprintName = "workiandoappTests"
-               ReferencedContainer = "container:workiandoapp.xcodeproj">
+               BuildableName = "WorkiandoTests.xctest"
+               BlueprintName = "WorkiandoTests"
+               ReferencedContainer = "container:Workiando.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -56,8 +56,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Workiando.app"
-            BlueprintName = "workiandoapp"
-            ReferencedContainer = "container:workiandoapp.xcodeproj">
+            BlueprintName = "Workiando"
+            ReferencedContainer = "container:Workiando.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -73,8 +73,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Workiando.app"
-            BlueprintName = "workiandoapp"
-            ReferencedContainer = "container:workiandoapp.xcodeproj">
+            BlueprintName = "Workiando"
+            ReferencedContainer = "container:Workiando.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

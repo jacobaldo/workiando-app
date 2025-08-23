@@ -12,10 +12,9 @@ import {
 import { showMessage } from "react-native-flash-message";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { Text } from "react-native-paper";
+import { API_KEY } from "../../../src/services/api";
 import { colors } from "../../constants/colors";
 import { ThemeContext } from "../../provider/ThemeProvider";
-import { API_KEY } from "../../services/api";
-import { analizingDirections } from "../../utils/others";
 import { MyAppProps } from "../App/types";
 import { useLocationList } from "./hooks";
 import { styles } from "./styles";
@@ -115,12 +114,25 @@ const LocationList = ({ navigation }: Props) => {
       }}
     >
       <GooglePlacesAutocomplete
+        placeholder="Search"
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data, details);
+        }}
+        query={{
+          key: API_KEY,
+          language: "es",
+        }}
+      />
+      {/* <GooglePlacesAutocomplete
         renderLeftButton={() => (
           <Icon name="map-marker" color={colors.primary.primary100} size={30} />
         )}
         placeholder="Ingresa una dirección"
         fetchDetails={true}
         onPress={async (data, details = null) => {
+          console.log("details", details);
+
           const jsonAdress = await analizingDirections(details);
           const dataJson = {
             ...jsonAdress,
@@ -138,9 +150,19 @@ const LocationList = ({ navigation }: Props) => {
         }}
         enablePoweredByContainer={false}
         suppressDefaultStyles={true}
-        filterReverseGeocodingByTypes={[
-          "locality",
-          "administrative_area_level_3",
+        // filterReverseGeocodingByTypes={[
+        //   "locality",
+        //   "administrative_area_level_3",
+        // ]}
+        // filterReverseGeocodingByTypes={[
+        //   "locality",
+        //   "administrative_area_level_3",
+        // ]}
+        predefinedPlaces={[
+          {
+            description: "Mi ubicación",
+            geometry: { location: { lat: 0, lng: 0 } },
+          },
         ]}
         predefinedPlacesAlwaysVisible={true}
         numberOfLines={2}
@@ -185,7 +207,7 @@ const LocationList = ({ navigation }: Props) => {
             color: theme.textColor,
           },
         }}
-      />
+      /> */}
       <TouchableOpacity
         style={styles.currentLocation}
         onPress={getByCurrentPosition}

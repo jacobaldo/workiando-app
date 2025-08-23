@@ -27,7 +27,7 @@ const Login = ({ navigation }: any) => {
     loading,
     isEmailValid,
     navigateRegister,
-    promptAsync,
+    loginWithGoogle,
     // loginWithFacebook,
     // numberRef,
     // countryCode,
@@ -212,7 +212,7 @@ const Login = ({ navigation }: any) => {
           <Button
             type="primary"
             btnText="Google"
-            onPress={() => promptAsync()}
+            onPress={() => loginWithGoogle()}
             style={styles.google}
             textStyle={styles.googleText}
             iconLeft={

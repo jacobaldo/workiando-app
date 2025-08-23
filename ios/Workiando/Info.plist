@@ -27,6 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>com.googleusercontent.apps.530045422051-4t68b87fvipor74fr4hep1fljtn03j9l</string>
           <string>workiandoapp</string>
           <string>org.chambea-pe-app</string>
         </array>
@@ -60,13 +61,6 @@
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
-    </array>
-    <key>NSUserTrackingUsageDescription</key>
-    <string>Se utilizarán tus datos para enviarte notificaciones personalizadas.</string>
-    <key>UIBackgroundModes</key>
-    <array>
-      <string>fetch</string>
-      <string>remote-notification</string>
     </array>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>

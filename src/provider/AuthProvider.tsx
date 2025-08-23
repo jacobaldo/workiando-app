@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import React, {
   createContext,
   useContext,
@@ -6,7 +7,6 @@ import React, {
   useReducer,
   useState,
 } from "react";
-// import OneSignal from "react-native-onesignal";
 import { useDispatch } from "react-redux";
 import SplashScreen from "../components/2.Molecules/SplashScreen";
 import { clearSubscription } from "../redux/Subscriptions/subscriptionAcction";
@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }: any) => {
       if (onboardingCompleted !== null) {
         await AsyncStorage.setItem("onboardingCompleted", onboardingCompleted);
       }
+      await GoogleSignin.signOut();
       // OneSignal.removeExternalUserId();
       dispatch({ type: "signOut" });
       dispatchRedux(clearSubscription());

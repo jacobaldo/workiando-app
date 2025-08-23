@@ -162,7 +162,7 @@ export const SelectLocationSheet = ({
           <View
             style={{
               ...styles.containerInput,
-              backgroundColor: theme.backgroundColor,
+              // backgroundColor: theme.backgroundColor,
             }}
           >
             <Button
