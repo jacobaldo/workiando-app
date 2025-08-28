@@ -1,15 +1,15 @@
-import React, {useContext} from 'react';
-import {StackScreenProps} from '@react-navigation/stack';
-import {MyAppProps} from '../App/types';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {ThemeContext} from '../../provider/ThemeProvider';
-import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import PublishedAll from './PublishedAll';
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { StackScreenProps } from "@react-navigation/stack";
+import React, { useContext } from "react";
+import { ThemeContext } from "../../provider/ThemeProvider";
+import { MyAppProps } from "../App/types";
+import PublishedAll from "./PublishedAll";
 
-interface Props extends StackScreenProps<MyAppProps, 'MyPublishedWorks'> {}
+interface Props extends StackScreenProps<MyAppProps, "MyPublishedWorks"> {}
 const MyPublishedWorks = ({}: Props) => {
   const Tab = createMaterialTopTabNavigator();
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -23,59 +23,79 @@ const MyPublishedWorks = ({}: Props) => {
           backgroundColor: theme.primary100, // Cambia 'blue' por el color deseado
           height: 2, // Controla el grosor de la línea
         },
-      }}>
+      }}
+    >
       <Tab.Screen
         name="PublishedActive"
         component={PublishedAll}
         options={{
-          tabBarLabel: 'Registrados',
-          tabBarIcon: ({color}) => (
-            <Icons name="file-document-edit-outline" color={color} size={25} />
+          tabBarLabel: "Registrados",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="file-document-edit-outline"
+              color={color}
+              size={25}
+            />
           ),
         }}
-        initialParams={{type: 'created'}}
+        initialParams={{ type: "created" }}
       />
+
       <Tab.Screen
         name="PublishedApproved"
         component={PublishedAll}
         options={{
-          tabBarLabel: 'Activos',
-          tabBarIcon: ({color}) => (
-            <Icons name="clipboard-clock" color={color} size={25} />
+          tabBarLabel: "Activos",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="clipboard-clock"
+              color={color}
+              size={25}
+            />
           ),
         }}
-        initialParams={{type: 'approved'}}
+        initialParams={{ type: "approved" }}
       />
       <Tab.Screen
         name="PublishedExpired"
         component={PublishedAll}
         options={{
-          tabBarLabel: 'Vencidos',
-          tabBarIcon: ({color}) => (
-            <Icons name="clock-remove" color={color} size={25} />
+          tabBarLabel: "Vencidos",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="clock-remove"
+              color={color}
+              size={25}
+            />
           ),
         }}
-        initialParams={{type: 'expired'}}
+        initialParams={{ type: "expired" }}
       />
       <Tab.Screen
         name="PublishedCompleted"
         component={PublishedAll}
         options={{
-          tabBarLabel: 'Contratados',
-          tabBarIcon: ({color}) => <Icons name="tag" color={color} size={25} />,
+          tabBarLabel: "Contratados",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="tag" color={color} size={25} />
+          ),
         }}
-        initialParams={{type: 'completed'}}
+        initialParams={{ type: "completed" }}
       />
       <Tab.Screen
         name="PublishedFinished"
         component={PublishedAll}
         options={{
-          tabBarLabel: 'Finalizados',
-          tabBarIcon: ({color}) => (
-            <Icons name="wallet-travel" color={color} size={20} />
+          tabBarLabel: "Finalizados",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="wallet-travel"
+              color={color}
+              size={20}
+            />
           ),
         }}
-        initialParams={{type: 'finished'}}
+        initialParams={{ type: "finished" }}
       />
     </Tab.Navigator>
   );

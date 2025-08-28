@@ -1,15 +1,14 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons.js";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useContext } from "react";
 import { Modal, Pressable, SafeAreaView, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { Marker } from "react-native-maps";
 import { Text } from "react-native-paper";
+import { colors } from "../../../../src/constants/colors";
+import { analizingDirections } from "../../../../src/utils/others";
 import { HeaderBottomSheet } from "../../../components/2.Molecules/HeaderBottomSheet";
 import { Button } from "../../../components/Button";
-import { colors } from "../../../constants/colors";
 import { ThemeContext } from "../../../provider/ThemeProvider";
-import { API_KEY } from "../../../services/api";
-import { analizingDirections } from "../../../utils/others";
 import { useSelectLocationSheet } from "./hooks";
 import { styles } from "./style";
 
@@ -51,7 +50,7 @@ export const SelectLocationSheet = ({
           <View style={{ alignItems: "center", padding: 16 }}>
             <GooglePlacesAutocomplete
               renderLeftButton={() => (
-                <Icon
+                <MaterialCommunityIcons
                   name="map-marker"
                   color={colors.primary.primary100}
                   size={30}
@@ -65,16 +64,17 @@ export const SelectLocationSheet = ({
                   ...jsonAdress,
                   latitude: details?.geometry?.location.lat,
                   longitude: details?.geometry?.location.lng,
-                  latitudeDelta: 0.01, // Ajustar basado en el radio
+                  latitudeDelta: 0.01,
                   longitudeDelta: 0.01,
                 };
 
                 setRegionAddress(dataJson);
               }}
               query={{
-                key: API_KEY,
-                language: "es",
+                key: "AIzaSyDYIwnCrJEo49AoPHkHN6ecsINoqzppjew",
+                language: "en",
               }}
+              onFail={(error) => console.error("erroreeeee", error)}
               enablePoweredByContainer={false}
               suppressDefaultStyles={true}
               filterReverseGeocodingByTypes={[

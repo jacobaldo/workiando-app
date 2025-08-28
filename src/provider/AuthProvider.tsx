@@ -66,13 +66,14 @@ export const AuthProvider = ({ children }: any) => {
       if (onboardingCompleted !== null) {
         await AsyncStorage.setItem("onboardingCompleted", onboardingCompleted);
       }
-      await GoogleSignin.signOut();
+
       // OneSignal.removeExternalUserId();
       dispatch({ type: "signOut" });
       dispatchRedux(clearSubscription());
     } catch (error) {
       console.error("Error al limpiar AsyncStorage:", error);
     }
+    await GoogleSignin.signOut();
   };
   useEffect(() => {
     silentLogin();

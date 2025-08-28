@@ -27,7 +27,6 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.googleusercontent.apps.530045422051-4t68b87fvipor74fr4hep1fljtn03j9l</string>
           <string>workiandoapp</string>
           <string>org.chambea-pe-app</string>
         </array>
