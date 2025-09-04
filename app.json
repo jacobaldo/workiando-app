@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.chambea_pe_app",
-      "versionCode": 13
+      "versionCode": 14
     },
     "web": {
       "bundler": "metro",

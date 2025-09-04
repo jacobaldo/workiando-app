@@ -93,6 +93,7 @@ const Login = ({ navigation }: any) => {
             errorValue={"Ingresa contraseña"}
           />
         </View>
+
         <Button
           type="primary"
           btnText="Iniciar Sesión"

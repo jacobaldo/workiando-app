@@ -25,7 +25,9 @@ const Register = ({ navigation }: RegisterProps) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={{ ...styles.container, backgroundColor: theme.backgroundColor }}
+    >
       <View style={styles.body}>
         <ScrollView
           showsVerticalScrollIndicator={false}

@@ -1,31 +1,31 @@
-import React, {useState} from 'react';
-import {View, Text, Image, TouchableOpacity, StatusBar} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {styles} from './style';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react";
+import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { styles } from "./style";
 
 const slides = [
-  {id: '1', image: require('./../../assets/pagina1.png')},
-  {id: '2', image: require('./../../assets/pagina2.png')},
-  {id: '3', image: require('./../../assets/pagina3.png')},
-  {id: '4', image: require('./../../assets/pagina4.png')},
-  {id: '5', image: require('./../../assets/pagina5.png')},
+  { id: "1", image: require("./../../assets/pagina1.png") },
+  { id: "2", image: require("./../../assets/pagina2.png") },
+  { id: "3", image: require("./../../assets/pagina3.png") },
+  { id: "4", image: require("./../../assets/pagina4.png") },
+  { id: "5", image: require("./../../assets/pagina5.png") },
 ];
 
-const Onboarding = ({navigation}: any) => {
+const Onboarding = ({ navigation }: any) => {
   const [index, setIndex] = useState(0);
 
   const handleNext = async () => {
     if (index < slides.length - 1) {
-      setIndex(prev => prev + 1);
+      setIndex((prev) => prev + 1);
     } else {
-      await AsyncStorage.setItem('onboardingCompleted', 'true');
-      navigation.replace('Login');
+      await AsyncStorage.setItem("onboardingCompleted", "true");
+      navigation.replace("Login");
     }
   };
 
   const handleSkip = async () => {
-    await AsyncStorage.setItem('onboardingCompleted', 'true');
-    navigation.replace('Login');
+    await AsyncStorage.setItem("onboardingCompleted", "true");
+    navigation.replace("Login");
   };
 
   return (
@@ -54,7 +54,7 @@ const Onboarding = ({navigation}: any) => {
           </View>
           <TouchableOpacity style={styles.button} onPress={handleNext}>
             <Text style={styles.next}>
-              {index === slides.length - 1 ? 'Empezar' : 'Siguiente'}
+              {index === slides.length - 1 ? "Empezar" : "Siguiente"}
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,13 +1,13 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../constants/colors';
+import { StyleSheet } from "react-native";
+import { colors } from "../../constants/colors";
 
 export const buttonStyles = StyleSheet.create({
   wrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
     borderRadius: 20,
     padding: 12,
   },
@@ -18,12 +18,12 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: colors.secondary.secondary100,
   },
   secondary: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: colors.primary.primary100,
   },
   tertiary: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   default: {
     backgroundColor: colors.neutral.neutral300,
@@ -71,7 +71,7 @@ export const textStyles = StyleSheet.create({
   text: {
     fontSize: 16,
     letterSpacing: 0.5,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   primary: {
     color: colors.white,

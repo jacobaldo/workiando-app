@@ -1,14 +1,14 @@
-import React from 'react';
-import {TouchableOpacity, Text, ActivityIndicator} from 'react-native';
-import {colors} from '../../constants/colors';
+import React from "react";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { colors } from "../../constants/colors";
 import {
   buttonStyles,
   disabledButtonStyles,
   disabledTextStyles,
   textStyles,
-} from './style';
+} from "./style";
 
-import {Props} from './types';
+import { Props } from "./types";
 
 export const Button = ({
   btnText,
@@ -16,7 +16,7 @@ export const Button = ({
   style = {},
   onPress,
   disabled = false,
-  type = 'default',
+  type = "default",
   loading,
   iconLeft,
 }: Props) => {
@@ -36,10 +36,11 @@ export const Button = ({
         ...buttonStyles[type],
         ...(disabled && disabledButtonStyles[type]),
         ...style,
-      }}>
+      }}
+    >
       {iconLeft}
       {loading ? (
-        <ActivityIndicator size={'small'} color={colors.white} />
+        <ActivityIndicator size={"small"} color={colors.white} />
       ) : (
         <Text
           style={{
@@ -47,7 +48,8 @@ export const Button = ({
             ...textStyles[type],
             ...(disabled && disabledTextStyles[type]),
             ...textStyle,
-          }}>
+          }}
+        >
           {btnText}
         </Text>
       )}
